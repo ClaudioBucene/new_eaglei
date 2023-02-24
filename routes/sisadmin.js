@@ -221,22 +221,54 @@ router.get("/departeditr/:id", async(req, res)=>{
 
 
 router.post("/editar_depart", upload.any(), async(req, res)=>{
+
 	console.log(req.body);
 	var userData=req.session.usuario;
+
 	var temporary=await user_db.find({nome:req.body.chefe_depart});
 
 	var edd=await ((new Date()).getDate()<10? '0'+(new Date()).getDate():(new Date()).getDate())+'/'+(((new Date()).getMonth()+1)<10? ('0'+((new Date()).getMonth()+1)):((new Date()).getMonth()+1))+'/'+((new Date()).getFullYear())+'   '+((new Date()).getHours()<10? ('0'+(new Date()).getHours()): (new Date()).getHours() )+' : '+((new Date()).getMinutes()<10? ('0'+(new Date()).getMinutes()):(new Date()).getMinutes());
 
 	var todo=await sisadmin_db.find();
+
+	var gett = await sisadmin_db.findOne({_id:todo[0]._id}, {departamento:1, funcao:1}).lean();
+
+	var ex_chef;
+	var funcaoid;
+
+	gett.departamento.forEach(elment => {
+		if (elment.nome == req.body.nome){
+			ex_chef = elment.chefe_depart;
+		}
+	});
+
+	gett.funcao.forEach(elment => {
+		if (elment.nome == "Director do Departamento"){
+			funcaoid = elment._id;
+		}
+	});
+
+	await user_db.updateOne({nome: ex_chef}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
+		if(err){
+			console.log("ocorreu um erro ao tentar aceder os dados")
+		}
+		else{
+			console.log("Unset on ex supervisor function done successfully")
+		}
+	})
+
+	await user_db.updateOne({nome: req.body.chefe_depart}, {$set:{nome_supervisor: "Luis Brazuna", funcao:"Manager", funcao_id: funcaoid, departamento: req.body.nome, departamento_id: req.body.idioty}}, function(err, data){
+		if(err){
+			console.log("ocorreu um erro ao tentar aceder os dados")
+		}
+		else{
+			console.log("Updated provincia and funcao on usuario")
+		}
+	})
+
 	if(temporary.length>0)
 		await sisadmin_db.updateOne({_id:todo[0]._id, departamento:{$elemMatch:{_id:req.body.idioty}}}, {"departamento.$.nome":req.body.nome,"departamento.$.chefe_depart_id":temporary[0]._id, "departamento.$.limite_mensal":req.body.limite_mensal, "departamento.$.chefe_depart":req.body.chefe_depart, "departamento.$.limite_po":req.body.limite_po,"departamento.$.editado_por":userData.nome,"departamento.$.data_edicao":edd })
 	res.json({teste:"done"})
-
-
-	
-
-
-
 })
 
 
