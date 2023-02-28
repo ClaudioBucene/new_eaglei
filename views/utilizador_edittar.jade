@@ -9,8 +9,6 @@ block content
 						label(for="nivel_acesso") <span data-i18n="demo.utilizador_form.nivel_acesso"></span>
 						select.browser-default(id="nivel_acesso", name="nivel_acesso", style="font-family:")
 							option(value="normal" selected="#{Usuarios[0].nivel_acesso}"=="normal"? true:false) Normal
-							option(value="cliente" selected="#{Usuarios[0].nivel_acesso}"=="cliente"? true:false) Cliente
-							option(value="gestor" selected="#{Usuarios[0].nivel_acesso}"=="gestor"? true:false) Gestor
 							option(value="admin" selected="#{Usuarios[0].nivel_acesso}"=="admin"? true:false) Administrador
 					.col.s12.m6.input-field
 						label(for="nome") <span data-i18n="demo.utilizador_form.nome"></span>

@@ -9,16 +9,12 @@ block content
 						label(for="nivel_acesso") <span data-i18n="demo.utilizador_form.nivel_acesso"></span>
 						select.browser-default(id="nivel_acesso", name="nivel_acesso", style="font-family:")
 							if Usuarios
-								if Usuarios[0].nivel_acesso == "gestor"
-									option(value="gestor", select.browser-defaulted="select.browser-defaulted") Gestor
-								else if Usuarios[0].nivel_acesso == "normal"
+								if Usuarios[0].nivel_acesso == "normal"
 									option(value="normal", select.browser-defaulted="select.browser-defaulted") Normal
 								else
 									option(value="admin", select.browser-defaulted="select.browser-defaulted") Administrador
 							else
 								option(value="normal") Normal
-								option(value="cliente") Cliente
-								option(value="gestor") Gestor
 								option(value="admin") Administrador
 					.col.s12.m6.input-field
 						label(for="nome") <span data-i18n="demo.utilizador_form.nome"></span>
@@ -51,8 +47,7 @@ block content
 					.col.s12.m6
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
 						select.browser-default.browser-default(name="provincia_trabalho", id="provincia_trabalho", style="font-family:")
-							-for(let i=0; i<AdMagen[0].provincia.length; i++)
-								option(value="#{AdMagen[0].provincia[i].nome}", data-cont="#{AdMagen[0].provincia[i]._id}") #{AdMagen[0].provincia[i].nome}
+								option(value="Maputo", data-cont="611df4937d82f600d87c4be4") Maputo
 					.col.s12.m6.input-field.exclusivo
 						label(for="profissao") <span data-i18n="demo.utilizador_form.supervisor"></span>
 						input.preencher( autocomplete="off", type="text" id="nome_supervisor" name="nome_supervisor" value="#{Usuarios ? Usuarios[0].nome_supervisor : ''}", style="font-family:")
@@ -63,8 +58,8 @@ block content
 					.col.s12.m6.exclusivo
 						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
 						select.browser-default.browser-default(name="funcao", id="funcao", style="font-family:")
-							-for(let i=0; i<AdMagen[0].funcao.length; i++)
-								option(value="#{AdMagen[0].funcao[i].nome}", data-cont="#{AdMagen[0].funcao[i]._id}") #{AdMagen[0].funcao[i].nome}
+							//- -for(let i=0; i<AdMagen[0].funcao.length; i++)
+							//- 	option(value="#{AdMagen[0].funcao[i].nome}", data-cont="#{AdMagen[0].funcao[i]._id}") #{AdMagen[0].funcao[i].nome}
 			fieldset.no-border.legend-border.exclusivo
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.veiculo"></span>
 				.row
@@ -121,27 +116,75 @@ block content
 							butoon#voltar_util(type="button", class="btn waves-efect waves-light activarAzul") << Back
 	block js
 		script(type="text/javascript" src="/js/jquery.mask.js")
-		script.
-			//- setInterval(function(){document.getElementById("utilizadorId").className="activarAzul"}, 50);
-			//- setTimeout(function(){
-			//- if(window.innerWidth<600){
-			//- document.getElementById("mySidebar").style.width = "0";
-			//- document.getElementById("main").style.marginLeft= "0";
-			//- document.getElementById("main").style.width="100%";
-			//- document.getElementById("main").style.marginBottom="0";}
-			//- }, 50);
 
-			//- document.ready(function(){function mes(){
-			//- var novoo;
-			//- var ms= new Date()
-			//- if((ms.getMonth()+1)<10)
-				//- novoo='0'+ms
-				//- return novoo;}
-			//- else{
-			//- novoo=''+(ms.getMonth()+1);
-			//- return novoo;
-			//- }
-			//- }})
+		script.
+			var region = document.getElementById('regiao'); 
+			var province = document.getElementById('provincia_trabalho');
+			
+			var dep = document.getElementById('departamento');
+			var cargo = document.getElementById('funcao');  
+
+			console.log('DEP');
+			console.log($("#departamento").val());
+
+
+			region.onchange = () => {				
+				switch($("#regiao").val()) {
+				case "maputo":
+					province.innerHTML = "<option value=Maputo data-cont=611df4937d82f600d87c4be4>Maputo</option>";	
+					break;
+				case "sul":
+					province.innerHTML = "<option value=Gaza data-cont=611e23d0f9b1b31cd868a302>Gaza</option><option value=Inhambane data-cont=611e23f0f9b1b31cd868a303>Inhambane</option>";	
+					break;
+				case "centro":
+					province.innerHTML = "<option value=Sofala data-cont=611e243af9b1b31cd868a304>Sofala</option><option value=Manica data-cont=611e245af9b1b31cd868a305>Manica</option><option value=Zambezia data-cont=611e2485f9b1b31cd868a306>Zambezia</option><option value=Tete data-cont=611e24bef9b1b31cd868a307>Tete</option>";	
+					break;
+				case "norte":
+					province.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+					break;
+				}
+			}
+
+			dep.onchange = () => {	
+
+				switch($("#departamento").val()) {
+					case "Telco":
+						cargo.innerHTML = "<option value=Maputo data-cont=611df4937d82f600d87c4be4>Maputo</option>";	
+						break;
+					case "Climatização e Electricidade":
+						cargo.innerHTML = "<option value=Gaza data-cont=611e23d0f9b1b31cd868a302>Gaza</option><option value=Inhambane data-cont=611e23f0f9b1b31cd868a303>Inhambane</option>";	
+						break;
+					case "Financeiro":
+						cargo.innerHTML = "<option value=Sofala data-cont=611e243af9b1b31cd868a304>Sofala</option><option value=Manica data-cont=611e245af9b1b31cd868a305>Manica</option><option value=Zambezia data-cont=611e2485f9b1b31cd868a306>Zambezia</option><option value=Tete data-cont=611e24bef9b1b31cd868a307>Tete</option>";	
+						break;
+					case "Tecnologias de Informação":
+						cargo.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						break;
+					case "Centro de Dados":
+						cargo.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						break;
+					case "Energia":
+						cargo.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						break;
+					case "Administrativo":
+						cargo.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						break;
+					case "Qualidade e Otimizaçãote":
+						cargo.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						break;
+					case "Centro de Suporte de Operações":
+						cargo.innerHTML = "<option value=Call Center data-cont=63edea83d0fb2331e0e40eb9>Call Center</option>";	
+						break;
+					case "Logística e Armazém":
+						cargo.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						break;
+					case "Recursos Humanos":
+						cargo.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						break;
+				}
+			}
+
+
 
 			setTimeout(function(){document.getElementById("utilizadorId").className="activarAzul"}, 100);
 			setTimeout(function(){

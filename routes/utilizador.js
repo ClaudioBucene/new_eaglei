@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Bcrypt=require("bcryptjs");
 var incidente_db=require("../entities/incidente");
-var admin_db=require("../entities/sisadmin")
+var admin_db=require("../entities/sisadmin");
 // const Nexmo = require('nexmo');
 // const nexmo = new Nexmo({
 //   apiKey: '1c9b0e39',
@@ -414,6 +414,8 @@ router.post("/novo",upload.any() ,async function(req, res){
 			var utilizador = await getUtilizador(req.body);
 			utilizador.registado_por=await req.session.usuario.nome
 			console.log(utilizador);
+
+			
 
 			await model.gravarDados(utilizador, function(err){
 					if(err){

@@ -24085,6 +24085,10 @@ $('#registar_util').click(function(){
 		}
 	});
 
+
+
+
+	
 $("#proposito").change(function(){
 	if($(this).val()=="project")
 	{
