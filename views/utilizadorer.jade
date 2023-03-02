@@ -48,18 +48,26 @@ block content
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
 						select.browser-default.browser-default(name="provincia_trabalho", id="provincia_trabalho", style="font-family:")
 								option(value="Maputo", data-cont="611df4937d82f600d87c4be4") Maputo
-					.col.s12.m6.input-field.exclusivo
-						label(for="profissao") <span data-i18n="demo.utilizador_form.supervisor"></span>
-						input.preencher( autocomplete="off", type="text" id="nome_supervisor" name="nome_supervisor" value="#{Usuarios ? Usuarios[0].nome_supervisor : ''}", style="font-family:")
+					.col.s12.m6.exclusivo
+						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
+						select.browser-default(id="nome_supervisor", name="nome_supervisor")
+							-for(let i=0; i<supers.length; i++)
+								option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].nome} - #{supers[i].departamento}
 				.row
-					.col.s12.m6.input-field.exclusivo
+					.col.s12.m6.exclusivo
 						label(for="telefone_supervisor") <span data-i18n="demo.utilizador_form.telefone_super"></span>
-						input.preencher( autocomplete="off", type="text", id="telefone_supervisor", name="telefone_supervisor", value="#{Usuarios ? Usuarios[0].telefone_supervisor : ''}", style="font-family:")
+						select.browser-default(id="telefone_supervisor", name="telefone_supervisor")
+							-for(let i=0; i<supers.length; i++)
+								option(value="#{supers[i].telefone_1}" , data-cont="#{supers[i]._id}") #{supers[i].telefone_1} - #{supers[i].nome}
 					.col.s12.m6.exclusivo
 						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
 						select.browser-default.browser-default(name="funcao", id="funcao", style="font-family:")
-							//- -for(let i=0; i<AdMagen[0].funcao.length; i++)
-							//- 	option(value="#{AdMagen[0].funcao[i].nome}", data-cont="#{AdMagen[0].funcao[i]._id}") #{AdMagen[0].funcao[i].nome}
+								option(value="Manager" data-cont="627e49eacba3d2105c26ed35") Director(a) do Departamento
+								option(value="Regional Manager" data-cont="611e2b8cf9b1b31cd868a30c") Director Regional
+								option(value="regional_manager" data-cont="611e3b3d6ed713019c50cf79") Supervisor
+								option(value="Tecnico" data-cont="616988fcd5a85a0794a0fbf9") Tecnico
+								option(value="Assistente" data-cont="611ded707d82f600d87c4be3") Assistente	
+
 			fieldset.no-border.legend-border.exclusivo
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.veiculo"></span>
 				.row
@@ -124,25 +132,23 @@ block content
 			var dep = document.getElementById('departamento');
 			var cargo = document.getElementById('funcao');  
 
-			console.log('DEP');
-			console.log($("#departamento").val());
-
-
-			region.onchange = () => {				
+			region.onchange = () => {	
+				
 				switch($("#regiao").val()) {
-				case "maputo":
-					province.innerHTML = "<option value=Maputo data-cont=611df4937d82f600d87c4be4>Maputo</option>";	
-					break;
-				case "sul":
-					province.innerHTML = "<option value=Gaza data-cont=611e23d0f9b1b31cd868a302>Gaza</option><option value=Inhambane data-cont=611e23f0f9b1b31cd868a303>Inhambane</option>";	
-					break;
-				case "centro":
-					province.innerHTML = "<option value=Sofala data-cont=611e243af9b1b31cd868a304>Sofala</option><option value=Manica data-cont=611e245af9b1b31cd868a305>Manica</option><option value=Zambezia data-cont=611e2485f9b1b31cd868a306>Zambezia</option><option value=Tete data-cont=611e24bef9b1b31cd868a307>Tete</option>";	
-					break;
-				case "norte":
+					case "maputo":
+						province.innerHTML = "<option value=Maputo data-cont=611df4937d82f600d87c4be4>Maputo</option>";	
+						break;
+					case "sul":
+						province.innerHTML = "<option value=Gaza data-cont=611e23d0f9b1b31cd868a302>Gaza</option><option value=Inhambane data-cont=611e23f0f9b1b31cd868a303>Inhambane</option>";	
+						break;
+					case "centro":
+						province.innerHTML = "<option value=Sofala data-cont=611e243af9b1b31cd868a304>Sofala</option><option value=Manica data-cont=611e245af9b1b31cd868a305>Manica</option><option value=Zambezia data-cont=611e2485f9b1b31cd868a306>Zambezia</option><option value=Tete data-cont=611e24bef9b1b31cd868a307>Tete</option>";	
+						break;
+					case "norte":
 					province.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
 					break;
 				}
+
 			}
 
 			dep.onchange = () => {	
@@ -186,7 +192,6 @@ block content
 						break;
 				}
 			}
-
 
 
 			setTimeout(function(){document.getElementById("utilizadorId").className="activarAzul"}, 100);

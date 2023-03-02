@@ -177,10 +177,12 @@ router.get("/novo",  async function(req, res){
 
 			var admin_case=await admin_db.find({});
 
+			var userz=await model.find({ $or: [ { funcao: "regional_manager" }, { funcao: "Regional Manager" }, {funcao: "Manager"} ] }, {nome: 1, funcao:1, telefone_1:1, departamento:1}).lean();
+
 			if(req.session.usuario.nivel_acesso=="admin" ){
 
 				if(admin_case.length>0)
-					res.render("utilizadorer", {DataU:userData,'provincias': dados_provinciais.provincias, AdMagen:admin_case, 'distritos': dados_provinciais.distritos})
+					res.render("utilizadorer", {DataU:userData,'provincias': dados_provinciais.provincias, AdMagen:admin_case, 'distritos': dados_provinciais.distritos, supers: userz})
 				else
 					res.redirect("/inicio")
 
