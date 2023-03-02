@@ -411,24 +411,67 @@ model.findOne({nome:req.session.usuario.nome}, function(err, data){
 
 router.post("/novo",upload.any() ,async function(req, res){
 
-	if(req.session.usuario.nivel_acesso=="admin"){
-
-			var utilizador = await getUtilizador(req.body);
-			utilizador.registado_por=await req.session.usuario.nome
+	var utilizador = await getUtilizador(req.body);
+			utilizador.registado_por=await req.session.usuario.nome;
+			console.log("NOVO USER");
 			console.log(utilizador);
 
+
+
+	if(req.session.usuario.nivel_acesso=="admin"){
+		var todo=await admin_db.find();
+		var gett = await admin_db.findOne({_id:todo[0]._id}, {departamento:1, funcao:1}).lean();
+		var ex_chef;
+		var novo_chefid;
+
+		await model.gravarDados(utilizador, function(err){
+			if(err){
+				console.log("Ocorreu um erro ao tentar gravar os dados!\n contacte o administrador do sistema");
+				console.log(err)
+			}
+			else{
+				console.log("dados gravados com sucesso");
+				res.json({done:"feito"})
+			}
+		});
+
+		gett.departamento.forEach(elment => {
+			if (elment.nome == utilizador.departamento){
+				ex_chef = elment.chefe_depart;
+			}	
+		});
+
+		novo_chefid = await model.findOne({nome: utilizador.nome}, {_id:1}).lean();
+
+		console.log("NOVO CHEF ID");
+		console.log(novo_chefid);
+
+		if(utilizador.funcao == "Manager"){
+
+			await model.updateOne({nome: ex_chef}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
+				if(err){
+					console.log("ocorreu um erro ao tentar aceder os dados")
+				}
+				else{
+					console.log("Unset on ex supervisor function done successfully")
+				}
+			})
+
+			await admin_db.updateOne({_id:todo[0]._id, departamento:{$elemMatch:{nome:req.body.departamento}}}, {$set:{"departamento.$.chefe_depart":utilizador.nome, "departamento.$.chefe_depart_id":novo_chefid}}, function(err, data){
+				if(err){
+					console.log("ocorreu um erro ao tentar aceder os dados")
+				}
+				else{
+					console.log("Updated provincia and funcao on usuario")
+				}
+			})
+
+		}
+
+			
 			
 
-			await model.gravarDados(utilizador, function(err){
-					if(err){
-						console.log("Ocorreu um erro ao tentar gravar os dados!\n contacte o administrador do sistema");
-						console.log(err)
-					}
-					else{
-						console.log("dados gravados com sucesso");
-						res.json({done:"feito"})
-					}
-			});
+		
 	}
 	else
 			res.redirect("/inicio");
