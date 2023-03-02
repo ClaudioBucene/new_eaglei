@@ -110,19 +110,19 @@ console.log("passei no if**********+++++***")
 								var dia= await daddds[0].data.getDate();
 								var horas= await daddds[0].data.getHours();
 								var minutos= await daddds[0].data.getMinutes();
-								var firstDate =await new Date(ano, mes, dia);
-								var secondDate =await new Date();
+								var firstDate =new Date(ano, mes, dia);
+								var secondDate =new Date();
 								console.log(firstDate, secondDate)
 								
-								var diffDays = await Math.round(Math.abs((firstDate - secondDate) / oneDay));
+								var diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 								var diffDays=ano+"-"+mes+"-"+dia;
 								console.log(diffDays)
 								
 								
-								var temp=await {};
-								temp.data=await diffDays;
+								var temp={};
+								temp.data=diffDays;
 								var pacote= Object.assign(dados, temp)
-								pacote.data=await diffDays
+								pacote.data=diffDays
 
 								req.session.usuario= await pacote;
 								req.session.usuario.data= diffDays;
@@ -424,16 +424,20 @@ router.post("/novo",upload.any() ,async function(req, res){
 		var ex_chef;
 		var novo_chefid;
 
-		await model.gravarDados(utilizador, function(err){
-			if(err){
-				console.log("Ocorreu um erro ao tentar gravar os dados!\n contacte o administrador do sistema");
-				console.log(err)
-			}
-			else{
-				console.log("dados gravados com sucesso");
-				res.json({done:"feito"})
-			}
-		});
+		
+		  model.gravarDados(utilizador, function(err){
+				if(err){
+					console.log("Ocorreu um erro ao tentar gravar os dados!\n contacte o administrador do sistema");
+					console.log(err)
+				}
+				else{
+					console.log("dados gravados com sucesso");
+					res.json({done:"feito"});
+				}
+			})
+			
+
+		
 
 		gett.departamento.forEach(elment => {
 			if (elment.nome == utilizador.departamento){
@@ -441,10 +445,7 @@ router.post("/novo",upload.any() ,async function(req, res){
 			}	
 		});
 
-		novo_chefid = await model.findOne({nome: utilizador.nome}, {_id:1}).lean();
-
-		console.log("NOVO CHEF ID");
-		console.log(novo_chefid);
+	
 
 		if(utilizador.funcao == "Manager"){
 
@@ -457,7 +458,12 @@ router.post("/novo",upload.any() ,async function(req, res){
 				}
 			})
 
-			await admin_db.updateOne({_id:todo[0]._id, departamento:{$elemMatch:{nome:req.body.departamento}}}, {$set:{"departamento.$.chefe_depart":utilizador.nome, "departamento.$.chefe_depart_id":novo_chefid}}, function(err, data){
+			novo_chefid = await model.findOne({nome: utilizador.nome}, {_id:1}).lean();
+
+			console.log("NOVO CHEF ID");
+			console.log(novo_chefid);
+
+			await admin_db.updateOne({_id:todo[0]._id, departamento:{$elemMatch:{nome:req.body.departamento}}}, {$set:{"departamento.$.chefe_depart":utilizador.nome, "departamento.$.chefe_depart_id":novo_chefid._id}}, function(err, data){
 				if(err){
 					console.log("ocorreu um erro ao tentar aceder os dados")
 				}
@@ -535,12 +541,12 @@ router.get("/modulos/:id", async(req, res)=>{
 	var userData=req.session.usuario;
 	var utili= await model.find({_id:req.params.id});
 	if(utili.length>0 ){
-		var estee=await [];
+		var estee=[];
 		var moduls=  utili[0].modulos.length>0? await Promise.all(utili[0].modulos.map(async(este, yu)=>{
 			
 		
 			console.log(yu)
-			await estee.push(este.referencia);
+			estee.push(este.referencia);
 			// return este
 		})):[];
 
@@ -549,17 +555,17 @@ router.get("/modulos/:id", async(req, res)=>{
 		todos_modulus=await admin_db.find({});
 		todos_modulus1=await todos_modulus[0].nivel_acesso;
 
-		var entregas=await [];
+		var entregas=[];
 
 		
 			await Promise.all(estee.map(async(ju)=>{
 				
-				let gft=await {};
+				let gft={};
 				gft.__id=await ju;
 				gft.nome=await todos_modulus1[todos_modulus1.findIndex(x=>x._id==ju)].nome;
 				gft.registed_by=await utili[0].modulos[utili[0].modulos.findIndex(x=>x.referencia==ju)].adcionado_por;
 				gft.datta=await utili[0].modulos[utili[0].modulos.findIndex(x=>x.referencia==ju)].data;
-				await entregas.push(gft);
+				entregas.push(gft);
 				
 			}));
 
@@ -591,7 +597,7 @@ router.get("/addmodulule/:id", async(req, res)=>{
 router.post("/addmodululedf", upload.any(), async(req, res)=>{
 	console.log(req.body);
 	var userData=req.session.usuario;
-	var edd=await ((new Date()).getDate()<10? '0'+(new Date()).getDate():(new Date()).getDate())+'/'+(((new Date()).getMonth()+1)<10? ('0'+((new Date()).getMonth()+1)):((new Date()).getMonth()+1))+'/'+((new Date()).getFullYear())+'   '+((new Date()).getHours()<10? ('0'+(new Date()).getHours()): (new Date()).getHours() )+' : '+((new Date()).getMinutes()<10? ('0'+(new Date()).getMinutes()):(new Date()).getMinutes());
+	var edd=((new Date()).getDate() < 10 ? '0' + (new Date()).getDate() : (new Date()).getDate())+'/'+(((new Date()).getMonth()+1)<10? ('0'+((new Date()).getMonth()+1)):((new Date()).getMonth()+1))+'/'+((new Date()).getFullYear())+'   '+((new Date()).getHours()<10? ('0'+(new Date()).getHours()): (new Date()).getHours() )+' : '+((new Date()).getMinutes()<10? ('0'+(new Date()).getMinutes()):(new Date()).getMinutes());
 	var kampa=await model.find({_id:req.body.hgusm, modulos:{$elemMatch:{referencia:req.body.frere}}});
 	console.log(kampa)
 	if(kampa.length==0){
@@ -609,7 +615,7 @@ router.get("/removerm0dulo/:id1/:id2", async(req, res)=>{
 	console.log(req.params)
 
 	var teste=await model.update({_id:req.params.id1},{$pull:{modulos:{referencia:req.params.id2}}} )
-	var utl=await "/utilizador/modulos/"+req.params.id1;
+	var utl="/utilizador/modulos/"+req.params.id1;
 	res.redirect(utl);
 })
 
@@ -618,8 +624,8 @@ router.post("/editar",upload.any(), async function(req, res){
 	if(req.session.usuario.nivel_acesso=="admin"){
 
 		var utilizador = await editarr(req.body);
-		var bom=await utilizador.bom;
-		var removido=await utilizador.editar;
+		var bom=utilizador.bom;
+		var removido=utilizador.editar;
 
 		console.log(utilizador)
 
@@ -720,23 +726,23 @@ async function editarr(body){
 			usuario.bom.nivel_acesso=await  body.nivel_acesso;
 			usuario.bom.senha=await body.senha.trim().replace(/[{}$\/*-+/#@!)()><?\\^\'%$&:,;`]/g,'');
 
-			usuario.editar.carta_conducao=await 1;
-			usuario.editar.supervisor=await 1;
-			usuario.editar.data_nascimento=await 1;
-			usuario.editar.funcao=await 1;
-			usuario.editar.departamento=await 1;
-			usuario.editar.nome_supervisor=await 1;
-			usuario.editar.telefone_supervisor=await 1;
-			usuario.editar.Validade_carta=await 1;
-			usuario.editar.matricula=await 1;
-			usuario.editar.modelo=await 1;
-			usuario.editar.marca=await 1;
+			usuario.editar.carta_conducao=1;
+			usuario.editar.supervisor=1;
+			usuario.editar.data_nascimento=1;
+			usuario.editar.funcao=1;
+			usuario.editar.departamento=1;
+			usuario.editar.nome_supervisor=1;
+			usuario.editar.telefone_supervisor=1;
+			usuario.editar.Validade_carta=1;
+			usuario.editar.matricula=1;
+			usuario.editar.modelo=1;
+			usuario.editar.marca=1;
 			
-			usuario.editar.funcao_id=await 1;
-			usuario.editar.departamento_id=await 1;
+			usuario.editar.funcao_id=1;
+			usuario.editar.departamento_id=1;
 
-			usuario.editar.ano_aquisicao=await 1;
-			usuario.editar.kilometragem=await 1;
+			usuario.editar.ano_aquisicao=1;
+			usuario.editar.kilometragem=1;
 
 		}
 		else
@@ -833,7 +839,7 @@ async function editarr(body){
 
  async function criarSenha(plaintext){
 
- 	var novo_objecto=await {};
+ 	var novo_objecto={};
  	novo_objecto.senha=await plaintext.novo_password.trim().replace(/[{}$\/*-+/#@!)()><?\\^\'%$&:,;`]/g,'');
  	novo_objecto.username=await plaintext.novo_username.trim().replace(/[{}$\/*-+/#@!)()><?\\^\'%$&:,;`]/g,'');
  	novo_objecto.idioma=await plaintext.idioma;
