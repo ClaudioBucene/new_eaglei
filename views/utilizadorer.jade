@@ -52,7 +52,7 @@ block content
 						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
 						select.browser-default(id="nome_supervisor", name="nome_supervisor")
 							-for(let i=0; i<supers.length; i++)
-								option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].nome} - #{supers[i].departamento}
+								option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].departamento} - #{supers[i].nome} 
 				.row
 					.col.s12.m6.exclusivo
 						label(for="telefone_supervisor") <span data-i18n="demo.utilizador_form.telefone_super"></span>
