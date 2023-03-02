@@ -420,36 +420,44 @@ router.post("/novo",upload.any() ,async function(req, res){
 
 	if(req.session.usuario.nivel_acesso=="admin"){
 		var todo=await admin_db.find();
-		var gett = await admin_db.findOne({_id:todo[0]._id}, {departamento:1, funcao:1}).lean();
-		var ex_chef;
-		var novo_chefid;
-
-		
-		  model.gravarDados(utilizador, function(err){
-				if(err){
-					console.log("Ocorreu um erro ao tentar gravar os dados!\n contacte o administrador do sistema");
-					console.log(err)
-				}
-				else{
-					console.log("dados gravados com sucesso");
-					res.json({done:"feito"});
-				}
-			})
+		var gett = await admin_db.findOne({_id:todo[0]._id}, {departamento:1, regiao:1, provincia:1}).lean();
+		var ex_chefdep;
+		var novo_chefdepid;
+		var ex_chefreg;
+		var ex_chefprov;
 			
-
-		
-
+		model.gravarDados(utilizador, function(err){
+			if(err){
+				console.log("Ocorreu um erro ao tentar gravar os dados!\n contacte o administrador do sistema");
+				console.log(err)
+			}
+			else{
+				console.log("dados gravados com sucesso");
+				res.json({done:"feito"});
+			}
+		})
+			
 		gett.departamento.forEach(elment => {
 			if (elment.nome == utilizador.departamento){
-				ex_chef = elment.chefe_depart;
+				ex_chefdep = elment.chefe_depart;
 			}	
 		});
 
-	
+		gett.regiao.forEach(elment => {
+			if (elment.nome == utilizador.regiao){
+				ex_chefreg = elment.regional_manager;
+			}
+		});
+
+		gett.provincia.forEach(elment => {
+			if (elment.nome == utilizador.provincia_trabalho){
+				ex_chefprov = elment.nome_supervisor;
+			}
+		});
 
 		if(utilizador.funcao == "Manager"){
 
-			await model.updateOne({nome: ex_chef}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
+			await model.updateOne({nome: ex_chefdep}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
 				if(err){
 					console.log("ocorreu um erro ao tentar aceder os dados")
 				}
@@ -458,12 +466,54 @@ router.post("/novo",upload.any() ,async function(req, res){
 				}
 			})
 
-			novo_chefid = await model.findOne({nome: utilizador.nome}, {_id:1}).lean();
+			novo_chefdepid = await model.findOne({nome: utilizador.nome}, {_id:1}).lean();
 
-			console.log("NOVO CHEF ID");
-			console.log(novo_chefid);
+			await admin_db.updateOne({_id:todo[0]._id, departamento:{$elemMatch:{nome:req.body.departamento}}}, {$set:{"departamento.$.chefe_depart":utilizador.nome, "departamento.$.chefe_depart_id":novo_chefdepid._id}}, function(err, data){
+				if(err){
+					console.log("ocorreu um erro ao tentar aceder os dados")
+				}
+				else{
+					console.log("Updated provincia and funcao on usuario")
+				}
+			})
 
-			await admin_db.updateOne({_id:todo[0]._id, departamento:{$elemMatch:{nome:req.body.departamento}}}, {$set:{"departamento.$.chefe_depart":utilizador.nome, "departamento.$.chefe_depart_id":novo_chefid._id}}, function(err, data){
+		}
+
+		if(utilizador.funcao == "Regional Manager"){
+
+			await model.updateOne({nome: ex_chefreg}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
+				if(err){
+					console.log("ocorreu um erro ao tentar aceder os dados")
+				}
+				else{
+					console.log("Unset on ex supervisor function done successfully")
+				}
+			})
+
+			await admin_db.updateOne({_id:todo[0]._id, regiao:{$elemMatch:{nome:req.body.regiao}}}, {$set:{"regiao.$.regional_manager":utilizador.nome, "regiao.$.editado_por":utilizador.registado_por}}, function(err, data){
+				if(err){
+					console.log("ocorreu um erro ao tentar aceder os dados")
+				}
+				else{
+					console.log("Updated provincia and funcao on usuario")
+				}
+			})
+
+		}
+
+		if(utilizador.funcao == "regional_manager"){
+
+			await model.updateOne({nome: ex_chefprov}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
+				if(err){
+					console.log("ocorreu um erro ao tentar aceder os dados")
+				}
+				else{
+					console.log("Unset on ex supervisor function done successfully")
+				}
+			});
+
+
+			await admin_db.updateOne({_id:todo[0]._id, provincia:{$elemMatch:{nome:req.body.provincia_trabalho}}}, {$set:{"provincia.$.nome_supervisor":utilizador.nome, "regiao.$.editado_por":utilizador.registado_por}}, function(err, data){
 				if(err){
 					console.log("ocorreu um erro ao tentar aceder os dados")
 				}
