@@ -12,93 +12,93 @@ block content
 									input.preencher( autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="nome" ,name="nome", value="Normal")
 								else
 									input.preencher( autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="nome" ,name="nome", value="Administrador") 
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="nome") <span data-i18n="demo.utilizador_form.nome"></span>
 						input.preencher( autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="nome" ,name="nome", value="#{Usuarios[0].nome? Usuarios[0].nome : ''}")
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="user_code") Codigo do Utilizador
-						input.preencher(autocomplete="off", type="text", style="font-family:;color:#12375c" ,id="user_code" ,name="user_code", value="#{Usuarios? Usuarios[0].user_code : ''}")
-					.col.s12.m6.input-field.exclusivo
+						input.preencher(autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="user_code" ,name="user_code", value="#{Usuarios? Usuarios[0].user_code : ''}")
+					.col.s12.m6
 						label(for="carta_conducao") <span data-i18n="demo.utilizador_form.carta_conducao"></span>
-						input.preencher( autocomplete="off", type="text", style="font-family:;color:#12375c" ,id="carta_conducao" ,name="carta_conducao", value="#{Usuarios[0].data_nascimento? Usuarios[0].carta_conducao : ''}")
-					.col.s12.m6.input-field.exclusivo
+						input.preencher( autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="carta_conducao" ,name="carta_conducao", value="#{Usuarios[0].data_nascimento? Usuarios[0].carta_conducao : ''}")
+					.col.s12.m6
 						label(for="data_nascimento")<span data-i18n="demo.utilizador_form.data_nasc"></span>
-						input( type="text", data-mask="00/00/0000", id="data_nascimento", name="data_nascimento", value="#{Usuarios[0].data_nascimento? Usuarios[0].data_nascimento : ''}")
-					.col.s12.m6.input-field.exclusivo
+						input( type="text", disabled, data-mask="00/00/0000", id="data_nascimento", name="data_nascimento", value="#{Usuarios[0].data_nascimento? Usuarios[0].data_nascimento : ''}")
+					.col.s12.m6
 						label(for="Validade_carta") <span data-i18n="demo.utilizador_form.validade_carta"></span>
-						input.preencher( autocomplete="off", type="text", data-mask="00/00/0000", style="font-family:;color:#12375c" ,id="Validade_carta" ,name="Validade_carta", value="#{Usuarios[0].Validade_carta? Usuarios[0].Validade_carta : ''}")
+						input.preencher( autocomplete="off", disabled, type="text", data-mask="00/00/0000", style="font-family:;color:#12375c" ,id="Validade_carta" ,name="Validade_carta", value="#{Usuarios[0].Validade_carta? Usuarios[0].Validade_carta : ''}")
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.area"></span>
 				.row
 					.col.s12.m6
 						label(for="regiao") <span data-i18n="demo.utilizador_form.regiao"></span>
-						select.browser-default(name="regiao", id="regiao", style="font-family:")
 							-for(let i=0; i<AdMagen[0].regiao.length; i++)
-								option(value="#{AdMagen[0].regiao[i].nome}" ,  selected="#{AdMagen[0].regiao[i]._id}"=="#{Usuarios[0].regiao_id}"? true:false) #{AdMagen[0].regiao[i].nome}
+								if(AdMagen[0].regiao[i]._id == Usuarios[0].regiao_id)
+									input.preencher( autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="regiao" ,name="regiao", value="#{AdMagen[0].regiao[i].nome}" )
 					.col.s12.m6
-							label(for="departamento") <span data-i18n="demo.utilizador_form.departamento"></span>
-							select.browser-default(id="departamento", name="departamento")
-								-for(let i=0; i<AdMagen[0].departamento.length; i++)
-									option(value="#{AdMagen[0].departamento[i].nome}", selected="#{AdMagen[0].departamento[i]._id}"=="#{Usuarios[0].departamento_id}"? true:false) #{AdMagen[0].departamento[i].nome}
+						label(for="departamento") <span data-i18n="demo.utilizador_form.departamento"></span>
+							-for(let i=0; i<AdMagen[0].departamento.length; i++)
+								if(AdMagen[0].departamento[i]._id == Usuarios[0].departamento_id)
+									input.preencher( autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="departamento" ,name="departamento", value="#{AdMagen[0].departamento[i].nome}" )
 					.col.s12.m6
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
-						select.browser-default.browser-default(name="provincia_trabalho", id="provincia_trabalho", style="font-family:")
 							-for(let i=0; i<AdMagen[0].provincia.length; i++)
-								option(value="#{AdMagen[0].provincia[i].nome}" , selected="#{AdMagen[0].provincia[i]._id}"=="#{Usuarios[0].provincia_id}"? true:false) #{AdMagen[0].provincia[i].nome}
-					.col.s12.m6.input-field
-						label(for="profissao") <span data-i18n="demo.utilizador_form.supervisor"></span>
-						input.preencher( autocomplete="off", type="text" id="nome_supervisor" name="nome_supervisor" value="#{Usuarios[0].nome_supervisor ? Usuarios[0].nome_supervisor : ''}", style="font-family:")
+								if(AdMagen[0].provincia[i]._id == Usuarios[0].provincia_id)
+									input.preencher( autocomplete="off", disabled, type="text", style="font-family:;color:#12375c" ,id="provincia_trabalho" ,name="provincia_trabalho", value="#{AdMagen[0].provincia[i].nome}" )
+					.col.s12.m6
+						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
+						input.preencher( autocomplete="off", disabled, type="text" id="nome_supervisor" name="nome_supervisor" value="#{Usuarios[0].nome_supervisor ? Usuarios[0].nome_supervisor : ''}", style="font-family:")
 				.row
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="telefone_supervisor") <span data-i18n="demo.utilizador_form.telefone_super"></span>
-						input.preencher( autocomplete="off", type="text", id="telefone_supervisor", name="telefone_supervisor", value="#{Usuarios[0].telefone_supervisor ? Usuarios[0].telefone_supervisor : ''}", style="font-family:")
+						input.preencher( autocomplete="off", disabled, type="text", id="telefone_supervisor", name="telefone_supervisor", value="#{Usuarios[0].telefone_supervisor ? Usuarios[0].telefone_supervisor : ''}", style="font-family:")
 					.col.s12.m6
 						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
-						select.browser-default.browser-default(name="funcao", id="funcao", style="font-family:")
 							-for(let i=0; i<AdMagen[0].funcao.length; i++)
-								option(value="#{AdMagen[0].funcao[i].nome}",  selected="#{AdMagen[0].funcao[i]._id}"=="#{Usuarios[0].funcao_id}"? true:false) #{AdMagen[0].funcao[i].nome}
+								if(AdMagen[0].funcao[i]._id == Usuarios[0].funcao_id)
+									input.preencher( autocomplete="off", disabled, type="text", id="funcao", name="funcao", value="#{AdMagen[0].funcao[i].nome}", style="font-family:") 
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.veiculo"></span>
 				.row
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="matricula") <span data-i18n="demo.utilizador_form.matricula"></span>
-						input.preencher( autocomplete="off", type="text", name="matricula", id="matricula",readonly, value="#{Usuarios[0].matricula ? Usuarios[0].matricula : 'SEM VEICULO'}", style="font-family:")
-					.col.s12.m6.input-field.exclusivo
+						input.preencher( autocomplete="off", disabled, type="text", name="matricula", id="matricula",readonly, value="#{Usuarios[0].matricula ? Usuarios[0].matricula : 'SEM VEICULO'}", style="font-family:")
+					.col.s12.m6
 						label(for="marca") <span data-i18n="demo.utilizador_form.marca"></span>
-						input.preencher( autocomplete="off", type="text", name="marca", id="marca",readonly, value="#{Usuarios[0].marca ? Usuarios[0].marca : 'SEM VEICULO'}", style="font-family:")
+						input.preencher( autocomplete="off", disabled, type="text", name="marca", id="marca",readonly, value="#{Usuarios[0].marca ? Usuarios[0].marca : 'SEM VEICULO'}", style="font-family:")
 				.row
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="modelo") <span data-i18n="demo.utilizador_form.modelo"></span>
-						input.preencher(autocomplete="off", type="text", name="modelo", id="modelo", readonly, value="#{Usuarios[0].modelo ? Usuarios[0].modelo : 'SEM VEICULO'}", style="font-family:")		
-					.col.s12.m6.input-field
+						input.preencher(autocomplete="off", disabled, type="text", name="modelo", id="modelo", readonly, value="#{Usuarios[0].modelo ? Usuarios[0].modelo : 'SEM VEICULO'}", style="font-family:")		
+					.col.s12.m6
 						label(for="ano_aquisicao") <span data-i18n="demo.utilizador_form.ano"></span>
-						input.preencher( autocomplete="off", type="text", name="ano_aquisicao", id="ano_aquisicao",readonly, data-mask="0000",value="#{Usuarios[0].ano_aquisicao ? Usuarios[0].ano_aquisicao : '0'}", style="font-family:")
+						input.preencher( autocomplete="off", disabled, type="text", name="ano_aquisicao", id="ano_aquisicao",readonly, data-mask="0000",value="#{Usuarios[0].ano_aquisicao ? Usuarios[0].ano_aquisicao : '0'}", style="font-family:")
 				.row
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="kilometragem") <span data-i18n="demo.utilizador_form.kilometros"></span>
-						input.preencher(autocomplete="off", type="number", name="kilometragem", id="kilometragem", readonly, value="#{Usuarios[0].kilometragem ? Usuarios[0].kilometragem : '0'}", style="font-family:")
+						input.preencher(autocomplete="off", disabled, type="number", name="kilometragem", id="kilometragem", readonly, value="#{Usuarios[0].kilometragem ? Usuarios[0].kilometragem : '0'}", style="font-family:")
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.contact"></span>
 				.row
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="telefone_1") <span data-i18n="demo.utilizador_form.telefone"></span>
-						input.preencher( autocomplete="off", type="text", id="telefone_1", name="telefone_1", value="#{Usuarios[0].telefone_1 ? Usuarios[0].telefone_1 : ''}", style="font-family:")
-					.col.s12.m6.input-field
+						input.preencher( autocomplete="off", disabled, type="text", id="telefone_1", name="telefone_1", value="#{Usuarios[0].telefone_1 ? Usuarios[0].telefone_1 : ''}", style="font-family:")
+					.col.s12.m6
 						label(for="email") email
-						input.preencher( autocomplete="off", type="email", name="email", id="email", value="#{Usuarios[0].email ? Usuarios[0].email : ''}", style="font-family:")
+						input.preencher( autocomplete="off", disabled, type="email", name="email", id="email", value="#{Usuarios[0].email ? Usuarios[0].email : ''}", style="font-family:")
 				.row
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="user_pettycash") <span data-i18n="demo.utilizador_form.pettycashamount"></span>
-						input.preencher( autocomplete="off", type="number", readonly, id="user_pettycash", name="user_pettycash", value="#{Usuarios[0].user_pettycash ? Usuarios[0].user_pettycash : 0}", style="font-family:")
+						input.preencher( autocomplete="off", disabled, type="number", readonly, id="user_pettycash", name="user_pettycash", value="#{Usuarios[0].user_pettycash ? Usuarios[0].user_pettycash : 0}", style="font-family:")
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.credenciais"></span>
 				.row
-					.col.s12.m6.input-field
+					.col.s12.m6
 						label(for="username") <span data-i18n="demo.utilizador_form.username"></span>
-						input.preencher( autocomplete="off", type="text", name="username", id="username", value="#{Usuarios[0].username ? Usuarios[0].username : ''}", style="font-family:")
+						input.preencher( autocomplete="off", disabled, type="text", name="username", id="username", value="#{Usuarios[0].username ? Usuarios[0].username : ''}", style="font-family:")
 					.col.s12.m6.input-field
 						label(for="senha") <span data-i18n="demo.utilizador_form.password"></span>
-						input.preencher( autocomplete="off", type="password", id="senha", name="senha", value="#{Usuarios[0].senha ? Usuarios[0].senha : ''}", style="font-family:")
+						input.preencher( autocomplete="off", disabled, type="password", id="senha", name="senha", value="#{Usuarios[0].senha ? Usuarios[0].senha : ''}", style="font-family:")
 
 			fieldset.no-border
 				.row.buttons-container
