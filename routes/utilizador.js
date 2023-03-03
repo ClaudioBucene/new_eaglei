@@ -574,13 +574,16 @@ router.get("/editar/:id", async function(req, res){
 
 	if(req.session.usuario.nivel_acesso=="admin"){
 
+		var userz=await model.find({ $or: [ { funcao: "regional_manager" }, { funcao: "Regional Manager" }, {funcao: "Manager"} ] }, {nome: 1, funcao:1, telefone_1:1, departamento:1}).lean();
+
+
 			var ttys= await admin_db.find({});
 			
 			model.find({_id:req.params.id}, function(err, data){
 				if(err){
 					console.log("ocorreu um erro ao tentar aceder os dados")
 				}
-				res.render('utilizador_edittar', {DataU:userData, Usuarios: data, AdMagen:ttys, funcionario: "logged!!", 'provincias': dados_provinciais.provincias, title: 'EagleI'});
+				res.render('utilizador_edittar', {DataU:userData, Usuarios: data, AdMagen:ttys, funcionario: "logged!!", 'provincias': dados_provinciais.provincias, supers: userz, title: 'EagleI'});
 
 			})
 	}
