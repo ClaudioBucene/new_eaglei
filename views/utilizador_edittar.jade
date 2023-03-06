@@ -42,16 +42,24 @@ block content
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
 						select.browser-default.browser-default(name="provincia_trabalho", id="provincia_trabalho", style="font-family:")
 							-for(let i=0; i<AdMagen[0].provincia.length; i++)
-								option(value="#{AdMagen[0].provincia[i].nome}", data-cont="#{AdMagen[0].provincia[i]._id}" , selected="#{AdMagen[0].provincia[i]._id}"=="#{Usuarios[0].provincia_id}"? true:false) #{AdMagen[0].provincia[i].nome}
+								option(value="#{AdMagen[0].provincia[i].nome}", data-cont="#{AdMagen[0].provincia[i]._id}", selected="#{AdMagen[0].provincia[i]._id}"=="#{Usuarios[0].provincia_id}"? true:false) #{AdMagen[0].provincia[i].nome}
 					.col.s12.m6
 						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
 						select.browser-default(id="nome_supervisor", name="nome_supervisor")
 							-for(let i=0; i<supers.length; i++)
-								option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].departamento} - #{supers[i].nome} 
+								if(Usuarios[0].nome_supervisor && (Usuarios[0].nome_supervisor == supers[i].nome))
+									option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].departamento} - #{supers[i].nome} 
+							-for(let i=0; i<supers.length; i++)
+									option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].departamento} - #{supers[i].nome} 
 				.row
-					.col.s12.m6.input-field.exclusivo
+					.col.s12.m6
 						label(for="telefone_supervisor") <span data-i18n="demo.utilizador_form.telefone_super"></span>
-						input.preencher( autocomplete="off", type="text", id="telefone_supervisor", name="telefone_supervisor", value="#{Usuarios ? Usuarios[0].telefone_supervisor : ''}", style="font-family:")
+						select.browser-default(id="telefone_supervisor", name="telefone_supervisor")
+							-for(let i=0; i<supers.length; i++)
+								if(Usuarios[0].telefone_supervisor == supers[i].telefone_1)
+									option(value="#{supers[i].telefone_1}" , data-cont="#{supers[i]._id}") #{supers[i].telefone_1} - #{supers[i].nome} 
+							-for(let i=0; i<supers.length; i++)
+									option(value="#{supers[i].telefone_1}" , data-cont="#{supers[i]._id}") #{supers[i].telefone_1} - #{supers[i].nome}			 
 					.col.s12.m6.exclusivo
 						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
 						select.browser-default.browser-default(name="funcao", id="funcao", style="font-family:")

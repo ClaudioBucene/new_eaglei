@@ -34,23 +34,29 @@ block content
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.area"></span>
 				.row
-					.col.s12.m6
+					.col.s12.m6.sst
 						label(for="regiao") <span data-i18n="demo.utilizador_form.regiao"></span>
 						select.browser-default(name="regiao", id="regiao", style="font-family:")
+							-for(let i=0; i<1; i++)
+								option(value="", data-cont="") Selecione a região
 							-for(let i=0; i<AdMagen[0].regiao.length; i++)
 								option(value="#{AdMagen[0].regiao[i].nome}", data-cont="#{AdMagen[0].regiao[i]._id}") #{AdMagen[0].regiao[i].nome}
 					.col.s12.m6.exclusivo
 							label(for="departamento") <span data-i18n="demo.utilizador_form.departamento"></span>
 							select.browser-default(id="departamento", name="departamento")
+								-for(let i=0; i<1; i++)
+									option(value="", data-cont="") Selecione o departamento
 								-for(let i=0; i<AdMagen[0].departamento.length; i++)
 									option(value="#{AdMagen[0].departamento[i].nome}" , data-cont="#{AdMagen[0].departamento[i]._id}") #{AdMagen[0].departamento[i].nome}
 					.col.s12.m6
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
 						select.browser-default.browser-default(name="provincia_trabalho", id="provincia_trabalho", style="font-family:")
-								option(value="Maputo", data-cont="611df4937d82f600d87c4be4") Maputo
+								option(value="", data-cont="") Selecione a província
 					.col.s12.m6.exclusivo
 						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
 						select.browser-default(id="nome_supervisor", name="nome_supervisor")
+							-for(let i=0; i<1; i++)
+									option(value="", data-cont="") Selecione o supervisor
 							-for(let i=0; i<supers.length; i++)
 								option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].departamento} - #{supers[i].nome} 
 				.row
@@ -73,21 +79,21 @@ block content
 				.row
 					.col.s12.m6.input-field.exclusivo
 						label(for="matricula") <span data-i18n="demo.utilizador_form.matricula"></span>
-						input.preencher( autocomplete="off", type="text", name="matricula", id="matricula",readonly, value="#{Usuarios ? Usuarios[0].matricula : 'SEM VEICULO'}", style="font-family:")
+						input.preencher( autocomplete="off", type="text", name="matricula", id="matricula", value="#{Usuarios ? Usuarios[0].matricula : 'SEM VEICULO'}", style="font-family:")
 					.col.s12.m6.input-field.exclusivo
 						label(for="marca") <span data-i18n="demo.utilizador_form.marca"></span>
-						input.preencher( autocomplete="off", type="text", name="marca", id="marca",readonly, value="#{Usuarios ? Usuarios[0].marca : 'SEM VEICULO'}", style="font-family:")
+						input.preencher( autocomplete="off", type="text", name="marca", id="marca", value="#{Usuarios ? Usuarios[0].marca : 'SEM VEICULO'}", style="font-family:")
 				.row
 					.col.s12.m6.input-field.exclusivo
 						label(for="modelo") <span data-i18n="demo.utilizador_form.modelo"></span>
-						input.preencher(autocomplete="off", type="text", name="modelo", id="modelo", readonly, value="#{Usuarios ? Usuarios[0].modelo : 'SEM VEICULO'}", style="font-family:")		
+						input.preencher(autocomplete="off", type="text", name="modelo", id="modelo",, value="#{Usuarios ? Usuarios[0].modelo : 'SEM VEICULO'}", style="font-family:")		
 					.col.s12.m6.input-field.exclusivo
 						label(for="ano_aquisicao") <span data-i18n="demo.utilizador_form.ano"></span>
-						input.preencher( autocomplete="off", type="text", name="ano_aquisicao", id="ano_aquisicao",readonly, data-mask="0000",value="#{Usuarios ? Usuarios[0].ano_aquisicao : '0'}", style="font-family:")
+						input.preencher( autocomplete="off", type="text", name="ano_aquisicao", id="ano_aquisicao", data-mask="0000",value="#{Usuarios ? Usuarios[0].ano_aquisicao : '0'}", style="font-family:")
 				.row
 					.col.s12.m6.input-field.exclusivo
 						label(for="kilometragem") <span data-i18n="demo.utilizador_form.kilometros"></span>
-						input.preencher(autocomplete="off", type="number", name="kilometragem", id="kilometragem", readonly, value="#{Usuarios ? Usuarios[0].kilometragem : '0'}", style="font-family:")
+						input.preencher(autocomplete="off", type="number", name="kilometragem", id="kilometragem",, value="#{Usuarios ? Usuarios[0].kilometragem : '0'}", style="font-family:")
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.contact"></span>
 				.row
@@ -100,7 +106,7 @@ block content
 				.row
 					.col.s12.m6.input-field.exclusivo
 						label(for="user_pettycash") <span data-i18n="demo.utilizador_form.pettycashamount"></span>
-						input.preencher( autocomplete="off", type="number", readonly, id="user_pettycash", name="user_pettycash", value="#{Usuarios ? Usuarios[0].user_pettycash : 0}", style="font-family:")
+						input.preencher( autocomplete="off", type="number", id="user_pettycash", name="user_pettycash", value="#{Usuarios ? Usuarios[0].user_pettycash : 0}", style="font-family:")
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.credenciais"></span>
 				.row

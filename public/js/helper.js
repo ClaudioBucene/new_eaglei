@@ -1172,6 +1172,9 @@ $(document).ready(function(){
 			$(this).parent('td').parent('tr').remove();
 			// console.log(arrAwLight);
 	});
+	$("#sst").on("change",function(e) {
+
+	});
 
 		$("#aw_light_db_fitting_image").on("change",function(e) {
 			//pega os ficheiros
@@ -4180,6 +4183,7 @@ var controle = $("input[name='travelinfo_proposito']:checked").val();
 		
 	});
 
+	
 
 	$('#reportsmaintenance_reporttype').change(function(){
 		console.log("dfghjghjklghjkl");
