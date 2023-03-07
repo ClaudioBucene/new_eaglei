@@ -4184,88 +4184,18 @@ var controle = $("input[name='travelinfo_proposito']:checked").val();
 	});
 
 	
+	$('#departamento').change(function(){
 
-	$('#reportsmaintenance_reporttype').change(function(){
-		console.log("dfghjghjklghjkl");
-		var reportsmaintenance_reporttype = $("#reportsmaintenance_reporttype").val();
+		console.log("DEP CHANGED");
+		var selected_dep = $("#departamento").val();
 
-			if(reportsmaintenance_reporttype == 'Last Refuel Report' || reportsmaintenance_reporttype=='Last Maintenance'){
-				console.log('@@@@@%@EDR^ftyu')
-				$('#data1').addClass('hide')
-				$('#typ').addClass('hide')
-				$('#typh').addClass('hide');
-				$('#data2').addClass('hide');
-				$('#data3').addClass('hide');
-				$('#data4').addClass('hide');
-				$('#mostrartecnico').addClass('hide');
-				$('#mostrartecnico1').addClass('hide');
-				$('#mostrartecnico2').addClass('hide');
-				$('#mostrartecnico3').addClass('hide');
-
-			}else if(reportsmaintenance_reporttype == "Diesel Refuel"){
-				$('#typ').addClass('hide');
-				$('#typh').addClass('hide');
-				$('#data1').removeClass('hide')
-				$('#data2').removeClass('hide');
-				$('#data3').removeClass('hide');
-				$('#data4').removeClass('hide');
-			}else if(reportsmaintenance_reporttype == "Planned Maintenance"){
-				$('#typh').removeClass('hide');
-				$('#typ').addClass('hide');
-				$('#data1').removeClass('hide')
-				$('#data2').removeClass('hide');
-				$('#data3').removeClass('hide');
-				$('#data4').removeClass('hide');
-			} else if( reportsmaintenance_reporttype == "Callout Stats" ){
-				$('#typ').removeClass('hide');
-				$('#typh').addClass('hide');
-				$('#data1').removeClass('hide');
-				$('#data3').removeClass('hide');
-				$('#data2').removeClass('hide');
-				$('#data4').removeClass('hide');
-			} else if( reportsmaintenance_reporttype == "All Jobcards" ){
-				$('#typ').removeClass('hide');
-				$('#typh').addClass('hide');
-				$('#data1').removeClass('hide');
-				$('#data3').removeClass('hide');
-				$('#data2').removeClass('hide');
-				$('#data4').removeClass('hide');
-			} else if( reportsmaintenance_reporttype == "Comserv Maintenance Report" ){
-				$('#typ').removeClass('hide');
-				$('#typh').addClass('hide');
-				$('#data1').removeClass('hide');
-				$('#data3').removeClass('hide');
-				$('#data2').removeClass('hide');
-				$('#data4').removeClass('hide');
-			} else if( reportsmaintenance_reporttype == "Planned Refuel" ){
-				$('#typ').removeClass('hide');
-				$('#typh').addClass('hide');
-				$('#data1').removeClass('hide');
-				$('#data2').removeClass('hide');
-				$('#data3').removeClass('hide');
-				$('#data4').removeClass('hide');
+			if(selected_dep != 'Telco'){
+				$('#diregional').addClass('hide');
+			}else if(selected_dep == 'Telco'){
+				$('#diregional').removeClass('hide');
 			}
-		else if( reportsmaintenance_reporttype == "Today Jobs" ){
-			$('#typ').addClass('hide');
-			$('#typh').addClass('hide');
-			$('#data1').removeClass('hide')
-			$('#data2').addClass('hide');
-			$('#data3').removeClass('hide');
-			$('#data4').removeClass('hide');	
-		} 
-		// else if( reportsmaintenance_reporttype == "Last Refuel Report" || reportsmaintenance_reporttype == "Last Maintenance"){
-		// 	// ('#typ').addClass('hide');
-		// 	// $('#typh').addClass('hide');
-		// 	// $('#mostrartecnico').addClass('hide');
-		// 	// $('#mostrartecnico1').addClass('hide');
-		// 	// $('#mostrartecnico2').addClass('hide');
-		// 	// $('#mostrartecnico3').addClass('hide');
-		// 	// $('#recolhernome').addClass('hide');
-		// 	$('#drr').removeClass('hide')
-		// 	$('#real').addClass('hide')
-			
-		// }
 	});
+
 
 	$('#extraircredelecreports').click(function(){
 		let fitchero=$("#pesquisador").attr("valor");
