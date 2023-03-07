@@ -34,6 +34,17 @@ block content
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.area"></span>
 				.row
+					.col.s12.m6
+						label(for="departamento") <span data-i18n="demo.utilizador_form.departamento"></span>
+						select.browser-default(id="departamento", name="departamento")
+							-for(let i=0; i<1; i++)
+								option(value="", data-cont="") Selecione o departamento
+							-for(let i=0; i<AdMagen[0].departamento.length; i++)
+								option(value="#{AdMagen[0].departamento[i].nome}" , data-cont="#{AdMagen[0].departamento[i]._id}") #{AdMagen[0].departamento[i].nome}
+					.col.s12.m6
+						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
+						select.browser-default.browser-default(name="funcao", id="funcao", style="font-family:")
+							option(value="", data-cont="") Selecione a função	
 					.col.s12.m6.sst
 						label(for="regiao") <span data-i18n="demo.utilizador_form.regiao"></span>
 						select.browser-default(name="regiao", id="regiao", style="font-family:")
@@ -41,38 +52,29 @@ block content
 								option(value="", data-cont="") Selecione a região
 							-for(let i=0; i<AdMagen[0].regiao.length; i++)
 								option(value="#{AdMagen[0].regiao[i].nome}", data-cont="#{AdMagen[0].regiao[i]._id}") #{AdMagen[0].regiao[i].nome}
-					.col.s12.m6.exclusivo
-							label(for="departamento") <span data-i18n="demo.utilizador_form.departamento"></span>
-							select.browser-default(id="departamento", name="departamento")
-								-for(let i=0; i<1; i++)
-									option(value="", data-cont="") Selecione o departamento
-								-for(let i=0; i<AdMagen[0].departamento.length; i++)
-									option(value="#{AdMagen[0].departamento[i].nome}" , data-cont="#{AdMagen[0].departamento[i]._id}") #{AdMagen[0].departamento[i].nome}
+					.col.s12.m6
+						label(for="director_regional") Director Regional
+						select.browser-default(name="director_regional", id="director_regional", style="font-family:")
+							option(value="", data-cont="") Selecione o Director Regional
 					.col.s12.m6
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
 						select.browser-default.browser-default(name="provincia_trabalho", id="provincia_trabalho", style="font-family:")
 								option(value="", data-cont="") Selecione a província
-					.col.s12.m6.exclusivo
+					.col.s12.m6
 						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
 						select.browser-default(id="nome_supervisor", name="nome_supervisor")
 							-for(let i=0; i<1; i++)
 									option(value="", data-cont="") Selecione o supervisor
 							-for(let i=0; i<supers.length; i++)
 								option(value="#{supers[i].nome}" , data-cont="#{supers[i]._id}") #{supers[i].departamento} - #{supers[i].nome} 
-				.row
-					.col.s12.m6.exclusivo
+					.col.s12.m6
 						label(for="telefone_supervisor") <span data-i18n="demo.utilizador_form.telefone_super"></span>
 						select.browser-default(id="telefone_supervisor", name="telefone_supervisor")
+							-for(let i=0; i<1; i++)
+									option(value="", data-cont="") Selecione o telefone do supervisor
 							-for(let i=0; i<supers.length; i++)
 								option(value="#{supers[i].telefone_1}" , data-cont="#{supers[i]._id}") #{supers[i].telefone_1} - #{supers[i].nome}
-					.col.s12.m6.exclusivo
-						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
-						select.browser-default.browser-default(name="funcao", id="funcao", style="font-family:")
-								option(value="Manager" data-cont="627e49eacba3d2105c26ed35") Director(a) do Departamento
-								option(value="Regional Manager" data-cont="611e2b8cf9b1b31cd868a30c") Director Regional
-								option(value="regional_manager" data-cont="611e3b3d6ed713019c50cf79") Supervisor
-								option(value="Tecnico" data-cont="616988fcd5a85a0794a0fbf9") Tecnico
-								option(value="Assistente" data-cont="611ded707d82f600d87c4be3") Assistente	
+					
 
 			fieldset.no-border.legend-border.exclusivo
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.veiculo"></span>
@@ -137,21 +139,26 @@ block content
 			
 			var dep = document.getElementById('departamento');
 			var cargo = document.getElementById('funcao');  
+			var diregional = document.getElementById('director_regional');
 
 			region.onchange = () => {	
 				
 				switch($("#regiao").val()) {
 					case "maputo":
-						province.innerHTML = "<option value=Maputo data-cont=611df4937d82f600d87c4be4>Maputo</option>";	
+						province.innerHTML = "<option value=Maputo data-cont=611df4937d82f600d87c4be4>Maputo</option>";
+						diregional.innerHTML = "<option value=Samuel David>Samuel David</option>";	
 						break;
 					case "sul":
 						province.innerHTML = "<option value=Gaza data-cont=611e23d0f9b1b31cd868a302>Gaza</option><option value=Inhambane data-cont=611e23f0f9b1b31cd868a303>Inhambane</option>";	
+						diregional.innerHTML = "<option value=Albino Cuamba>Albino Cuamba</option>";	
 						break;
 					case "centro":
 						province.innerHTML = "<option value=Sofala data-cont=611e243af9b1b31cd868a304>Sofala</option><option value=Manica data-cont=611e245af9b1b31cd868a305>Manica</option><option value=Zambezia data-cont=611e2485f9b1b31cd868a306>Zambezia</option><option value=Tete data-cont=611e24bef9b1b31cd868a307>Tete</option>";	
+						diregional.innerHTML = "<option value=Dalilio Chigoi>Dalilio Chigoi</option>";
 						break;
 					case "norte":
-					province.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						province.innerHTML = "<option value=Nampula data-cont=611e24eef9b1b31cd868a308>Nampula</option><option value=Niassa data-cont=611e250ef9b1b31cd868a309>Niassa</option><option value=Cabo Delgado data-cont=611e2577f9b1b31cd868a30a>Cabo Delgado</option>";	
+						diregional.innerHTML = "<option value=Pedro Ribeiro>Pedro Ribeiro</option>";
 					break;
 				}
 
