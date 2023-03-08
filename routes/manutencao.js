@@ -7854,6 +7854,10 @@ router.get('/preventativemaint/tobeinvoiced', function(req, res) {
 	}
 });
 
+
+
+
+
 router.get('/ttnumberhome/novocallout', async function(req, res) {
 	var userData=req.session.usuario;
 	var nome = userData.nome;
@@ -7938,6 +7942,11 @@ router.get('/ttnumberhome/novocallout', async function(req, res) {
 		}
 	}).sort({ cliente_nome: 1 }).lean();	
 });
+
+
+
+
+
 
 router.post('/tthomenewpesquisa', async function(req, res) {
 	var userData=req.session.usuario;

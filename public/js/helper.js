@@ -9857,6 +9857,11 @@ var controle = $("input[name='travelinfo_proposito']:checked").val();
 
  	});
 
+
+
+
+	
+
 	$("#createnewttnumber").click(function(){
 
 		var dadosjobcards = JSON.parse($("#recolherdados").attr("detalhesjobcards"));
@@ -10107,6 +10112,11 @@ var controle = $("input[name='travelinfo_proposito']:checked").val();
 	});
 
 	
+
+
+
+
+
 	$("#createnewhvac_project").click(function(){
 
 			var dadosprojectos = JSON.parse($("#recolherdados").attr("detalhesprojectos"));
@@ -10453,6 +10463,13 @@ var controle = $("input[name='travelinfo_proposito']:checked").val();
 
 	
 	});
+
+
+
+
+
+
+
 
 	$('.deletejobcard').click(function () {
 		var jobId = $(this).attr("data-user-new");
@@ -23940,82 +23957,109 @@ var showCity = function(selectedState){
 	
 
 $('#registar_util').click(function(){
+
+	var users = JSON.parse($("#utilizador").attr("users"));
+	var usercod = $("#user_code").val();
+	var usernome= $("#username").val();
+	console.log(users)
+	var codePosicao = users.findIndex(x => x.user_code === usercod);
+	var nameposicao = users.findIndex(x => x.username === usernome);
+	console.log("11111")
+	console.log(nameposicao)
+	// var dadosprojectos = JSON.parse($("#recolherdados").attr("detalhespusersrojectos"));
+	var controlador = 0;
+	if(codePosicao != -1)
+		controlador=1;
+	else if(nameposicao != -1)
+		controlador=2;
+	else
+		controlador = 3;
+
+	if(controlador==1){
+		$('#msg_title_modal').html((($(".lang-picker").attr("value")=="pt")?'Messagem do Sistema':'System Message'))
+		$('#msg_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Esse Codigo de Utilizador já se encontra registrado, escolha outro.':'This ticket is already registered, choose another.'))
+		$('#msg_modal').openModal();
+	}else if(controlador==2){
+		$('#msg_title_modal').html((($(".lang-picker").attr("value")=="pt")?'Messagem do Sistema':'System Message'))
+		$('#msg_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Esse Nome de Utilizador já se encontra registrado, escolha outro.':'This ticket is already registered, choose another.'))
+		$('#msg_modal').openModal();
+	}else{
+
 		if(validar()){
-
-
 		$('#yes_no_title_modal').html((($(".lang-picker").attr("value")=="pt")?'Messagem do Sistema':'System Message'))
-	$('#yes_no_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Deseja realmente o gravar o utilizador  <b>':'Do you really want to save <b>')+$('#nome').val()+'</b>?')
+		$('#yes_no_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Deseja realmente o gravar o utilizador  <b>':'Do you really want to save <b>')+$('#nome').val()+'</b>?')
 
-			// $('#yes_no_content_modal').html('Deseja realmente registar o utilizador <b>'+$('#nome').val()+'</b>?')
-			$('#yes_no_modal').openModal();
-			$('#yes_btn_modal').click(function(e){ 
-				 $('#loading').fadeIn().delay(7000).fadeOut();
-				e.stopImmediatePropagation();
-				e.stopPropagation();
-				var userForm = new FormData();
-				if($("#nivel_acesso").val()=="cliente")
-				{
-								userForm.append("nome",$("#nome").val());
-								userForm.append("regiao", $("#regiao").val());
-								userForm.append("regiao_id", $("#regiao").find("option:selected").data("cont"));
-								userForm.append("provincia_trabalho",$("#provincia_trabalho").val());
-								userForm.append("provincia_id", $("#provincia_trabalho").find("option:selected").data("cont"));
-								userForm.append("telefone_1",$("#telefone_1").val());
-								userForm.append("email",$("#email").val());
-								userForm.append("username",$("#username").val());
-								userForm.append("nivel_acesso", $("#nivel_acesso").val());
-								userForm.append("senha",$("#senha").val());
+				// $('#yes_no_content_modal').html('Deseja realmente registar o utilizador <b>'+$('#nome').val()+'</b>?')
+				$('#yes_no_modal').openModal();
+				$('#yes_btn_modal').click(function(e){ 
+					$('#loading').fadeIn().delay(7000).fadeOut();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					var userForm = new FormData();
+					if($("#nivel_acesso").val()=="cliente")
+					{
+									userForm.append("nome",$("#nome").val());
+									userForm.append("regiao", $("#regiao").val());
+									userForm.append("regiao_id", $("#regiao").find("option:selected").data("cont"));
+									userForm.append("provincia_trabalho",$("#provincia_trabalho").val());
+									userForm.append("provincia_id", $("#provincia_trabalho").find("option:selected").data("cont"));
+									userForm.append("telefone_1",$("#telefone_1").val());
+									userForm.append("email",$("#email").val());
+									userForm.append("username",$("#username").val());
+									userForm.append("nivel_acesso", $("#nivel_acesso").val());
+									userForm.append("senha",$("#senha").val());
+								}
+							if($("#nivel_acesso").val()!="cliente"){
+
+									userForm.append("user_code",$("#user_code").val());
+									userForm.append("nome",$("#nome").val());
+									userForm.append("kilometragem",$("#kilometragem").val());
+									userForm.append("carta_conducao",$("#carta_conducao").val());
+									userForm.append("data_nascimento", $("#data_nascimento").val());
+									userForm.append("Validade_carta", $("#Validade_carta").val());
+									userForm.append("regiao", $("#regiao").val());
+									userForm.append("regiao_id", $("#regiao").find("option:selected").data("cont"));
+									userForm.append("departamento", $("#departamento").val());
+									userForm.append("departamento_id", $("#departamento").find("option:selected").data("cont"));
+									userForm.append("provincia_trabalho",$("#provincia_trabalho").val());
+									userForm.append("provincia_id", $("#provincia_trabalho").find("option:selected").data("cont"));
+									userForm.append("telefone_supervisor", $("#telefone_supervisor").val());
+									userForm.append("matricula",$("#matricula").val().toUpperCase());
+									userForm.append("supervisor",$("#supervisor").val());
+									userForm.append("funcao",$("#funcao").val());
+									userForm.append("funcao_id", $("#funcao").find("option:selected").data("cont"));
+									userForm.append("marca",$("#marca").val());
+									userForm.append("modelo",$("#modelo").val());
+									userForm.append("ano_aquisicao",$("#ano_aquisicao").val());
+									userForm.append("telefone_1",$("#telefone_1").val());
+									userForm.append("nome_supervisor",$("#nome_supervisor").val());
+									userForm.append("email",$("#email").val());
+									userForm.append("username",$("#username").val());
+									userForm.append("nivel_acesso", $("#nivel_acesso").val());
+									userForm.append("senha",$("#senha").val());
+
 							}
-						if($("#nivel_acesso").val()!="cliente"){
 
-								userForm.append("user_code",$("#user_code").val());
-								userForm.append("nome",$("#nome").val());
-								userForm.append("kilometragem",$("#kilometragem").val());
-								userForm.append("carta_conducao",$("#carta_conducao").val());
-								userForm.append("data_nascimento", $("#data_nascimento").val());
-								userForm.append("Validade_carta", $("#Validade_carta").val());
-								userForm.append("regiao", $("#regiao").val());
-								userForm.append("regiao_id", $("#regiao").find("option:selected").data("cont"));
-								userForm.append("departamento", $("#departamento").val());
-								userForm.append("departamento_id", $("#departamento").find("option:selected").data("cont"));
-								userForm.append("provincia_trabalho",$("#provincia_trabalho").val());
-								userForm.append("provincia_id", $("#provincia_trabalho").find("option:selected").data("cont"));
-								userForm.append("telefone_supervisor", $("#telefone_supervisor").val());
-								userForm.append("matricula",$("#matricula").val().toUpperCase());
-								userForm.append("supervisor",$("#supervisor").val());
-								userForm.append("funcao",$("#funcao").val());
-								userForm.append("funcao_id", $("#funcao").find("option:selected").data("cont"));
-								userForm.append("marca",$("#marca").val());
-								userForm.append("modelo",$("#modelo").val());
-								userForm.append("ano_aquisicao",$("#ano_aquisicao").val());
-								userForm.append("telefone_1",$("#telefone_1").val());
-								userForm.append("nome_supervisor",$("#nome_supervisor").val());
-								userForm.append("email",$("#email").val());
-								userForm.append("username",$("#username").val());
-								userForm.append("nivel_acesso", $("#nivel_acesso").val());
-								userForm.append("senha",$("#senha").val());
+							var xhr=new XMLHttpRequest();
+							xhr.open("POST", "/utilizador/novo", true);
+							xhr.send(userForm);
+								xhr.onreadystatechange = function () {
+							if (xhr.readyState === 4) {
+								if (xhr.status === 200) { // When data is received successfully
+								
 
-						}
-
-						var xhr=new XMLHttpRequest();
-						xhr.open("POST", "/utilizador/novo", true);
-						xhr.send(userForm);
-							xhr.onreadystatechange = function () {
-						if (xhr.readyState === 4) {
-							if (xhr.status === 200) { // When data is received successfully
-							 
-
-								setTimeout(function(){
-										window.location.href="/utilizador";
-									}, 1500)
+									setTimeout(function(){
+											window.location.href="/utilizador";
+										}, 1500)
+								}
 							}
-						}
-					};
-				
+						};
+					
 
 
 
-			})
+				})
+			}
 		}
 	});
 
