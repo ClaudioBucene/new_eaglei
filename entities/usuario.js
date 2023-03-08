@@ -38,6 +38,7 @@ var usuarioSchema = new mongoose.Schema({
 	departamento_id:String,
 	funcao_id:String,
 	provincia_id:String,
+	director_regional:String,
 	regiao_id:String,
 	modulos:[{adcionado_por:String, referencia:String, data:String}]
 });

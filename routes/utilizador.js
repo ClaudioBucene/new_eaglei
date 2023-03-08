@@ -179,10 +179,6 @@ router.get("/novo",  async function(req, res){
 
 			var userz =await model.find({}, {user_code:1, username:1}).lean();
 
-
-
-			
-
 			if(req.session.usuario.nivel_acesso=="admin" ){
 
 				if(admin_case.length>0)
@@ -714,6 +710,7 @@ if(body.nivel_acesso=="cliente"){
 	usuario.provincia_trabalho=await body.provincia_trabalho;
 	
 	usuario.telefone_1=await body.telefone_1;
+	usuario.director_regional = await body.director_regional;
 	usuario.regiao=await body.regiao.toLowerCase();
 	
 	
@@ -743,6 +740,7 @@ else
 	usuario.matricula=await body.matricula;
 	usuario.modelo=await body.modelo;
 	usuario.marca=await body.marca;
+	usuario.director_regional = await body.director_regional;
 	usuario.regiao_id=await body.regiao_id;
 	usuario.provincia_id=await body.provincia_id;
 	usuario.funcao_id=await body.funcao_id;

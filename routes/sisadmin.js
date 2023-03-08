@@ -659,12 +659,14 @@ router.post("/editar_province", upload.any(), async(req, res)=>{
 	console.log(req.body);
 	var userData=req.session.usuario;
 
-	await user_db.updateOne
-
-
 	var edd=await ((new Date()).getDate()<10? '0'+(new Date()).getDate():(new Date()).getDate())+'/'+(((new Date()).getMonth()+1)<10? ('0'+((new Date()).getMonth()+1)):((new Date()).getMonth()+1))+'/'+((new Date()).getFullYear())+'   '+((new Date()).getHours()<10? ('0'+(new Date()).getHours()): (new Date()).getHours() )+' : '+((new Date()).getMinutes()<10? ('0'+(new Date()).getMinutes()):(new Date()).getMinutes());
 
 	var todo=await sisadmin_db.find();
+
+	var newsuper_tel = await user_db.findOne({nome: req.body.nome_supervisor}, {telefone_1:1});
+
+	console.log("NR DO TELEFONE DO NOVO SUPER");
+	console.log(newsuper_tel);
 
 	var funcao = await sisadmin_db.findOne({_id:todo[0]._id}, {funcao: 1, provincia: 1, regiao: 1}).lean();
 
@@ -709,6 +711,18 @@ router.post("/editar_province", upload.any(), async(req, res)=>{
 			console.log("Updated provincia and funcao on usuario")
 		}
 	})
+
+	
+
+	await user_db.updateMany({nome_supervisor: ex_supervisor}, {$set:{nome_supervisor: req.body.nome_supervisor}}, function(err, data){
+		if(err){
+			console.log("ocorreu um erro ao tentar aceder os dados")
+		}
+		else{
+			console.log("Updated new supervisor in all userz")
+		}
+	})
+
 
 	await sisadmin_db.updateOne({_id:todo[0]._id, provincia:{$elemMatch:{_id:req.body.idioty}}}, {"provincia.$.nome":req.body.nome, "provincia.$.nome_supervisor":req.body.nome_supervisor,"provincia.$.regiao":req.body.regiao, "provincia.$.editado_por":userData.nome,"provincia.$.data_edicao":edd })
 	res.json({teste:"done"})

@@ -24002,6 +24002,7 @@ $('#registar_util').click(function(){
 									userForm.append("regiao", $("#regiao").val());
 									userForm.append("regiao_id", $("#regiao").find("option:selected").data("cont"));
 									userForm.append("provincia_trabalho",$("#provincia_trabalho").val());
+									userForm.append("director_regional",$("#director_regional").val());
 									userForm.append("provincia_id", $("#provincia_trabalho").find("option:selected").data("cont"));
 									userForm.append("telefone_1",$("#telefone_1").val());
 									userForm.append("email",$("#email").val());
@@ -24021,6 +24022,7 @@ $('#registar_util').click(function(){
 									userForm.append("regiao_id", $("#regiao").find("option:selected").data("cont"));
 									userForm.append("departamento", $("#departamento").val());
 									userForm.append("departamento_id", $("#departamento").find("option:selected").data("cont"));
+									userForm.append("director_regional",$("#director_regional").val());
 									userForm.append("provincia_trabalho",$("#provincia_trabalho").val());
 									userForm.append("provincia_id", $("#provincia_trabalho").find("option:selected").data("cont"));
 									userForm.append("telefone_supervisor", $("#telefone_supervisor").val());
