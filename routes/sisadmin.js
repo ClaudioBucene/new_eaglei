@@ -248,27 +248,42 @@ router.post("/editar_depart", upload.any(), async(req, res)=>{
 		}
 	});
 
-	await user_db.updateOne({nome: ex_chef}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
-		if(err){
-			console.log("ocorreu um erro ao tentar aceder os dados")
-		}
-		else{
-			console.log("Unset on ex supervisor function done successfully")
-		}
-	})
-
-	await user_db.updateOne({nome: req.body.chefe_depart}, {$set:{nome_supervisor: "Luis Brazuna", funcao:"Manager", funcao_id: funcaoid, departamento: req.body.nome, departamento_id: req.body.idioty}}, function(err, data){
-		if(err){
-			console.log("ocorreu um erro ao tentar aceder os dados")
-		}
-		else{
-			console.log("Updated provincia and funcao on usuario")
-		}
-	})
-
-	if(temporary.length>0)
+	if(temporary.length>0){
+		await user_db.updateOne({nome: ex_chef}, {$set:{funcao:"", funcao_id:"", nome_supervisor:""}}, function(err, data){
+			if(err){
+				console.log("ocorreu um erro ao tentar aceder os dados")
+			}
+			else{
+				console.log("Unset on ex supervisor function done successfully")
+			}
+		})
+	
+		await user_db.updateOne({nome: req.body.chefe_depart}, {$set:{nome_supervisor: "Luis Brazuna", funcao:"Manager", funcao_id: funcaoid, departamento: req.body.nome, departamento_id: req.body.idioty}}, function(err, data){
+			if(err){
+				console.log("ocorreu um erro ao tentar aceder os dados")
+			}
+			else{
+				console.log("Updated provincia and funcao on usuario")
+			}
+		})
+	
+		await user_db.updateMany({nome_supervisor: ex_chef}, {$set:{nome_supervisor: req.body.chefe_depart}}, function(err, data){
+			if(err){
+				console.log("ocorreu um erro ao tentar aceder os dados")
+			}
+			else{
+				console.log("Updated new Supervisor in all userz")
+			}
+		})
+	
 		await sisadmin_db.updateOne({_id:todo[0]._id, departamento:{$elemMatch:{_id:req.body.idioty}}}, {"departamento.$.nome":req.body.nome,"departamento.$.chefe_depart_id":temporary[0]._id, "departamento.$.limite_mensal":req.body.limite_mensal, "departamento.$.chefe_depart":req.body.chefe_depart, "departamento.$.limite_po":req.body.limite_po,"departamento.$.editado_por":userData.nome,"departamento.$.data_edicao":edd })
+		
+	}
+
+	
 	res.json({teste:"done"})
+
+
 })
 
 
@@ -670,7 +685,7 @@ router.post("/editar_province", upload.any(), async(req, res)=>{
 
 	var funcao = await sisadmin_db.findOne({_id:todo[0]._id}, {funcao: 1, provincia: 1, regiao: 1}).lean();
 
-
+	var temporary=await user_db.find({nome:req.body.nome_supervisor});
 
 	var region;
 	var ex_supervisor;
@@ -692,8 +707,9 @@ router.post("/editar_province", upload.any(), async(req, res)=>{
 	
 	});
 
+	if(temporary.length>0){
 
-
+		
 	await user_db.updateOne({nome: ex_supervisor}, {$set:{funcao:"", funcao_id:""}}, function(err, data){
 		if(err){
 			console.log("ocorreu um erro ao tentar aceder os dados")
@@ -712,8 +728,6 @@ router.post("/editar_province", upload.any(), async(req, res)=>{
 		}
 	})
 
-	
-
 	await user_db.updateMany({nome_supervisor: ex_supervisor}, {$set:{nome_supervisor: req.body.nome_supervisor}}, function(err, data){
 		if(err){
 			console.log("ocorreu um erro ao tentar aceder os dados")
@@ -723,9 +737,13 @@ router.post("/editar_province", upload.any(), async(req, res)=>{
 		}
 	})
 
-
 	await sisadmin_db.updateOne({_id:todo[0]._id, provincia:{$elemMatch:{_id:req.body.idioty}}}, {"provincia.$.nome":req.body.nome, "provincia.$.nome_supervisor":req.body.nome_supervisor,"provincia.$.regiao":req.body.regiao, "provincia.$.editado_por":userData.nome,"provincia.$.data_edicao":edd })
+
+	}
+
 	res.json({teste:"done"})
+
+
 })
 
 
@@ -865,6 +883,8 @@ router.post("/editar_region", upload.any(), async(req, res)=>{
 	var funcaoid;
 	var ex_regional;
 
+	var temporary=await user_db.find({nome:req.body.regional_manager});
+
 	await gett.regiao.forEach(element => {
 		if (element.nome == req.body.nome){
 			ex_regional = element.regional_manager;
@@ -877,6 +897,9 @@ router.post("/editar_region", upload.any(), async(req, res)=>{
 		}
 	});
 
+	if(temporary.length>0){
+
+			
 	await user_db.updateOne({nome: ex_regional}, {$set:{funcao:"", funcao_id:""}}, function(err, data){
 		if(err){
 			console.log("ocorreu um erro ao tentar aceder os dados")
@@ -895,7 +918,20 @@ router.post("/editar_region", upload.any(), async(req, res)=>{
 		}
 	})
 
+	await user_db.updateMany({nome_supervisor: ex_regional}, {$set:{director_regional: req.body.regional_manager}}, function(err, data){
+		if(err){
+			console.log("ocorreu um erro ao tentar aceder os dados")
+		}
+		else{
+			console.log("Updated new Regional Manager in all userz")
+		}
+	})
+
 	await sisadmin_db.updateOne({_id:todo[0]._id, regiao:{$elemMatch:{_id:req.body.idioty}}}, {"regiao.$.nome":req.body.nome, "regiao.$.regional_manager":req.body.regional_manager, "regiao.$.editado_por":userData.nome,"regiao.$.data_edicao":edd })
+	
+	}
+
+	
 	res.json({teste:"done"})
 
 

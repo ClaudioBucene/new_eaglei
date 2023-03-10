@@ -27126,23 +27126,23 @@ $("#dsistar_sisadm_rpvince").click(function(){
 
 	$("#editxltar_sisadm_department").click(function(){
 
-	if(validar()){
+		if(validar()){
 
-	$('#loading').fadeIn().delay(10000).fadeOut();
-		var requested_by = $("#requested_by").val();
-		var idioty = $("#nome").attr("idioty");
-		var nome = $("#nome").val();
-		var chefe_depart = $("#chefe_depart").val();
-		var limite_po = $("#limite_po").val();
-		// var chefe_depart_id=$("#chefe_depart").val();
-	 
-	 
-		// var responsaveis = $("#responsaveis").val();
-		// var responsaveis_armazem = JSON.parse($("#chefe_departamento").attr("chefdos"));
+			$('#loading').fadeIn().delay(10000).fadeOut();
+			var requested_by = $("#requested_by").val();
+			var idioty = $("#nome").attr("idioty");
+			var nome = $("#nome").val();
+			var chefe_depart = $("#chefe_depart").val();
+			var limite_po = $("#limite_po").val();
+			// var chefe_depart_id=$("#chefe_depart").val();
 		
+		
+			// var responsaveis = $("#responsaveis").val();
+			// var responsaveis_armazem = JSON.parse($("#chefe_departamento").attr("chefdos"));
+			
 
 
-		var stock_request_form= new FormData();
+			var stock_request_form= new FormData();
 
 	
 		
