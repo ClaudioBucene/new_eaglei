@@ -23,14 +23,6 @@ block content
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.area"></span>
 				.row
 					.col.s12.m6
-							label(for="regiao") <span data-i18n="demo.utilizador_form.regiao"></span>
-							select.browser-default(name="regiao", id="regiao", style="font-family:")
-								option(value="" disabled selected selmecVerde) choose option
-								option(value="sul" selected= "#{Usuarios[0].regiao}"=="sul"? true:false) Sul
-								option(value="centro" selected= "#{Usuarios[0].regiao}"=="centro"? true:false) Centro
-								option(value="norte" selected= "#{Usuarios[0].regiao}"=="norte"? true:false) Norte
-								option(value="maputo" selected= "#{Usuarios[0].regiao}"=="maputo"? true:false) Maputo
-					.col.s12.m6
 						label(for="departamento") <span data-i18n="demo.utilizador_form.departamento"></span>
 						select.browser-default.browser-default(id="departamento", name="departamento")
 							option(value="" disabled selected) choose option
@@ -45,7 +37,21 @@ block content
 							option(value="Logistics" selected="#{Usuarios[0].departamento}"=="Logistics"? true:false) Logistics
 							option(value="Power" selected="#{Usuarios[0].departamento}"=="Power"? true:false) Power
 							option(value="Procurement" selected="#{Usuarios[0].departamento}"=="Procurement"? true:false) Procurement
-							
+					.col.s12.m6.input-field
+						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
+						input.preencher( autocomplete="off", type="text", name="funcao", id="funcao", value="#{Usuarios[0].funcao}", style="font-family:")	
+					.col.s12.m6
+						label(for="regiao") <span data-i18n="demo.utilizador_form.regiao"></span>
+						select.browser-default(name="regiao", id="regiao", style="font-family:")
+							option(value="" disabled selected selmecVerde) choose option
+							option(value="sul" selected= "#{Usuarios[0].regiao}"=="sul"? true:false) Sul
+							option(value="centro" selected= "#{Usuarios[0].regiao}"=="centro"? true:false) Centro
+							option(value="norte" selected= "#{Usuarios[0].regiao}"=="norte"? true:false) Norte
+							option(value="maputo" selected= "#{Usuarios[0].regiao}"=="maputo"? true:false) Maputo
+					if (Usuarios[0].director_regional)
+						.col.s12.m6.input-field
+							label(for="director_regional") Director regional 
+							input.preencher( autocomplete="off", type="text", name="funcao", id="director_regional", value="#{Usuarios[0].director_regional}", style="font-family:")	
 					.col.s12.m6
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
 						select.browser-default.browser-default(name="provincia_trabalho", id="provincia_trabalho", style="font-family:")
@@ -59,15 +65,13 @@ block content
 								-for(var i = 0; i < provincias.length; i++)
 									option(value="#{provincias[i]}") #{provincias[i]}
 					.col.s12.m6.input-field
-						label(for="profissao") <span data-i18n="demo.utilizador_form.supervisor"></span>
+						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
 						input.preencher( autocomplete="off", type="text" id="nome_supervisor" name="nome_supervisor" value="#{Usuarios[0].nome_supervisor}", style="font-family:")
 				.row
 					.col.s12.m6.input-field
 						label(for="telefone_supervisor") <span data-i18n="demo.utilizador_form.telefone_super"></span>
 						input.preencher( autocomplete="off", type="text", id="telefone_supervisor", name="telefone_supervisor", value="#{Usuarios[0].telefone_supervisor}", style="font-family:")
-					.col.s12.m6.input-field
-						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
-						input.preencher( autocomplete="off", type="text", name="funcao", id="funcao", value="#{Usuarios[0].funcao}", style="font-family:")
+					
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.veiculo"></span>
 				.row

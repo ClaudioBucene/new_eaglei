@@ -31,15 +31,25 @@ block content
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.area"></span>
 				.row
 					.col.s12.m6
-						label(for="regiao") <span data-i18n="demo.utilizador_form.regiao"></span>
-							-for(let i=0; i<AdMagen[0].regiao.length; i++)
-								if(AdMagen[0].regiao[i]._id == Usuarios[0].regiao_id)
-									input.preencher( autocomplete="off", readonly, type="text", style="font-family:;color:#12375c" ,id="regiao" ,name="regiao", value="#{AdMagen[0].regiao[i].nome}" )
-					.col.s12.m6
 						label(for="departamento") <span data-i18n="demo.utilizador_form.departamento"></span>
 							-for(let i=0; i<AdMagen[0].departamento.length; i++)
 								if(AdMagen[0].departamento[i]._id == Usuarios[0].departamento_id)
 									input.preencher( autocomplete="off", readonly, type="text", style="font-family:;color:#12375c" ,id="departamento" ,name="departamento", value="#{AdMagen[0].departamento[i].nome}" )
+					.col.s12.m6
+						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
+							-for(let i=0; i<AdMagen[0].funcao.length; i++)
+								if(AdMagen[0].funcao[i]._id == Usuarios[0].funcao_id)
+									input.preencher( autocomplete="off", readonly, type="text", id="funcao", name="funcao", value="#{AdMagen[0].funcao[i].nome}", style="font-family:") 
+					.col.s12.m6
+						label(for="regiao") <span data-i18n="demo.utilizador_form.regiao"></span>
+							-for(let i=0; i<AdMagen[0].regiao.length; i++)
+								if(AdMagen[0].regiao[i]._id == Usuarios[0].regiao_id)
+									input.preencher( autocomplete="off", readonly, type="text", style="font-family:;color:#12375c" ,id="regiao" ,name="regiao", value="#{AdMagen[0].regiao[i].nome}" )
+					if (Usuarios[0].director_regional)
+						.col.s12.m6.input-field
+							label(for="director_regional") Director regional 
+							input.preencher( autocomplete="off", type="text", readonly, name="funcao", id="director_regional", value="#{Usuarios[0].director_regional}", style="font-family:")
+				.row
 					.col.s12.m6
 						label(for="provincia_trabalho") <span data-i18n="demo.utilizador_form.provincia"></span>
 							-for(let i=0; i<AdMagen[0].provincia.length; i++)
@@ -48,15 +58,10 @@ block content
 					.col.s12.m6
 						label(for="nome_supervisor") <span data-i18n="demo.utilizador_form.supervisor"></span>
 						input.preencher( autocomplete="off", readonly, type="text" id="nome_supervisor" name="nome_supervisor" value="#{Usuarios[0].nome_supervisor ? Usuarios[0].nome_supervisor : ''}", style="font-family:")
-				.row
 					.col.s12.m6
 						label(for="telefone_supervisor") <span data-i18n="demo.utilizador_form.telefone_super"></span>
 						input.preencher( autocomplete="off", readonly, type="text", id="telefone_supervisor", name="telefone_supervisor", value="#{Usuarios[0].telefone_supervisor ? Usuarios[0].telefone_supervisor : ''}", style="font-family:")
-					.col.s12.m6
-						label(for="funcao") <span data-i18n="demo.utilizador_form.funcao"></span>
-							-for(let i=0; i<AdMagen[0].funcao.length; i++)
-								if(AdMagen[0].funcao[i]._id == Usuarios[0].funcao_id)
-									input.preencher( autocomplete="off", readonly, type="text", id="funcao", name="funcao", value="#{AdMagen[0].funcao[i].nome}", style="font-family:") 
+					
 			fieldset.no-border.legend-border
 				legend.selmecAzul.bold <span data-i18n="demo.utilizador_form.veiculo"></span>
 				.row

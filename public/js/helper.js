@@ -23987,7 +23987,7 @@ $('#registar_util').click(function(){
 
 		if(validar()){
 		$('#yes_no_title_modal').html((($(".lang-picker").attr("value")=="pt")?'Messagem do Sistema':'System Message'))
-		$('#yes_no_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Deseja realmente o gravar o utilizador  <b>':'Do you really want to save <b>')+$('#nome').val()+'</b>?')
+		$('#yes_no_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Deseja realmente gravar o utilizador  <b>':'Do you really want to save <b>')+$('#nome').val()+'</b>?')
 
 				// $('#yes_no_content_modal').html('Deseja realmente registar o utilizador <b>'+$('#nome').val()+'</b>?')
 				$('#yes_no_modal').openModal();
