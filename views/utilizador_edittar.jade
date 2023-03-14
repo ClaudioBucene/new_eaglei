@@ -98,7 +98,7 @@ block content
 					.col.s12.m6.input-field
 						label(for="senha") <span data-i18n="demo.utilizador_form.password"></span>
 						input.preencher( autocomplete="off", type="password", id="senha", name="senha", value="#{Usuarios ? Usuarios[0].senha : ''}", style="font-family:")
-
+		.row#utilizador(users="#{users}")
 			fieldset.no-border
 				.row.buttons-container
 					if Usuarios

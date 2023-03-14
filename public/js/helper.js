@@ -23874,8 +23874,38 @@ var showCity = function(selectedState){
 						reader.readAsDataURL(file);
 				});
 	
-				$('#registar_editacao').click(function(){
-						if(validar()){
+	$('#registar_editacao').click(function(){
+						
+					var users = JSON.parse($("#utilizador").attr("users"));
+					var usercod = $("#user_code").val();
+					var usernome= $("#username").val();
+					console.log(users)
+					var codePosicao = users.findIndex(x => x.user_code === usercod);
+					var nameposicao = users.findIndex(x => x.username === usernome);
+					console.log("11111");
+					console.log(codePosicao);
+					console.log(nameposicao);
+					// var dadosprojectos = JSON.parse($("#recolherdados").attr("detalhespusersrojectos"));
+					var controlador = 0;
+					if(codePosicao != -1)
+						controlador=1;
+					else if(nameposicao != -1)
+						controlador=2;
+					else
+						controlador = 3;
+
+					if(controlador==1){
+						$('#msg_title_modal').html((($(".lang-picker").attr("value")=="pt")?'Messagem do Sistema':'System Message'))
+						$('#msg_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Esse Codigo de Utilizador já se encontra registrado, escolha outro.':'This ticket is already registered, choose another.'))
+						$('#msg_modal').openModal();
+					}else if(controlador==2){
+						$('#msg_title_modal').html((($(".lang-picker").attr("value")=="pt")?'Messagem do Sistema':'System Message'))
+						$('#msg_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Esse Nome de Utilizador já se encontra registrado, escolha outro.':'This ticket is already registered, choose another.'))
+						$('#msg_modal').openModal();
+					}else{
+
+					
+					if(validar()){
 							$('#yes_no_title_modal').html('Message System')
 							// $('#yes_no_content_modal').html('do you really to update data of <b>'+$('#nome').val()+'</b>?')
 							$('#yes_no_content_modal').html((($(".lang-picker").attr("value")=="pt")?'Deseja realmente o actualizar  <b>':'Do you really want to update <b>')+$('#nome').val()+'</b>?')
@@ -23884,9 +23914,9 @@ var showCity = function(selectedState){
 								$('#loading').fadeIn().delay(10000).fadeOut();
 								e.stopImmediatePropagation();
 								 e.stopPropagation();
-				var userForm = new FormData();
-				if($("#nivel_acesso").val()=="cliente")
-				{
+						var userForm = new FormData();
+						if($("#nivel_acesso").val()=="cliente")
+						{
 								userForm.append("identificacao",$("#nome").attr("identj"));
 								userForm.append("nome",$("#nome").val());
 								userForm.append("regiao", $("#regiao").val());
@@ -23952,8 +23982,10 @@ var showCity = function(selectedState){
 				
 				
 							})
-						}
-					})
+					}
+				}
+
+	})
 	
 
 $('#registar_util').click(function(){

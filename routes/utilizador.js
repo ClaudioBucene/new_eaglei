@@ -571,6 +571,7 @@ model.find({_id:req.params.id}, function(err, data){
 router.get("/editar/:id", async function(req, res){
 
 	var userData= req.session.usuario;
+	var usuarios =await model.find({}, {user_code:1, username:1}).lean();
 
 	if(req.session.usuario.nivel_acesso=="admin"){
 
@@ -583,7 +584,7 @@ router.get("/editar/:id", async function(req, res){
 				if(err){
 					console.log("ocorreu um erro ao tentar aceder os dados")
 				}
-				res.render('utilizador_edittar', {DataU:userData, Usuarios: data, AdMagen:ttys, funcionario: "logged!!", 'provincias': dados_provinciais.provincias, supers: userz, title: 'EagleI'});
+				res.render('utilizador_edittar', {DataU:userData, Usuarios: data, AdMagen:ttys, funcionario: "logged!!", 'provincias': dados_provinciais.provincias,users:JSON.stringify(usuarios), supers: userz, title: 'EagleI'});
 
 			})
 	}
