@@ -16272,7 +16272,7 @@ router.post("/updatephotoinfoHvacInfo/:id",  uploadcallhvac.any(), async functio
 
 		switch(controladorfuncao){
 			case 1:
-				jobcards.find({...queryobject, jobcard_jobtype:"Callout",jobcard_maintenancedate:{$lte:dateto, $gte:datefrom}, jobcard_sitearrivaldate:{$exists:true}, $or:[{jobcard_linemanager:nome}, {jobcard_tecniconome:nome}]}, {jobcard_site:1, jobcard_sitearrivaldate:1, jobcard_ttnumber:1,jobcard_estadoactual:1, jobcard_jobinfo:1, jobcard_estadoactual:1, jobcard_tecniconome:1, jobcard_linemanager:1, jobcard_loggedby:1, jobcard_regiao:1,jobcard_remedialaction:1, jobcard_arrivaldepartureduration:1}, async function(err, data){
+				jobcards.find({...queryobject, jobcard_jobtype:"Callout",jobcard_maintenancedate:{$lte:dateto, $gte:datefrom}, jobcard_sitearrivaldate:{$exists:true}, $or:[{jobcard_linemanager:nome}, {jobcard_tecniconome:nome}]}, {jobcard_site:1, jobcard_sitearrivaldate:1, jobcard_ttnumber:1,jobcard_estadoactual:1, jobcard_jobinfo:1, jobcard_responsetime:1, jobcard_tecniconome:1, jobcard_linemanager:1, jobcard_loggedby:1, jobcard_regiao:1,jobcard_remedialaction:1, jobcard_arrivaldepartureduration:1}, async function(err, data){
 					if(err){
 						console.log("ocorreu um erro ao tentar aceder os dados")
 					}
@@ -16287,6 +16287,8 @@ router.post("/updatephotoinfoHvacInfo/:id",  uploadcallhvac.any(), async functio
 								  dados[i].Site=y.jobcard_site;
 								  dados[i].Maintenance_Date=y.jobcard_sitearrivaldate;
 								  dados[i].TTnumber=y.jobcard_ttnumber;
+								  dados[i].Maintenance_duration =  y.jobcard_arrivaldepartureduration;
+								  dados[i].Response_time = y.jobcard_responsetime;
 								  dados[i].Reason = y.jobcard_jobinfo.join();
 								  dados[i].Status=y.jobcard_estadoactual;
 								  dados[i].Technician=y.jobcard_tecniconome;
@@ -16318,7 +16320,7 @@ router.post("/updatephotoinfoHvacInfo/:id",  uploadcallhvac.any(), async functio
 			break;
 
 			case 2:
-				jobcards.find({...queryobject, jobcard_jobtype:"Callout",jobcard_maintenancedate:{$lte:dateto, $gte:datefrom}, jobcard_sitearrivaldate:{$exists:true}, $or:[{jobcard_linemanager:nome}, {jobcard_tecniconome:nome}]}, {jobcard_site:1, jobcard_sitearrivaldate:1, jobcard_ttnumber:1,jobcard_estadoactual:1, jobcard_jobinfo:1, jobcard_estadoactual:1, jobcard_tecniconome:1, jobcard_linemanager:1, jobcard_loggedby:1, jobcard_regiao:1,jobcard_remedialaction:1, jobcard_arrivaldepartureduration:1}, async function(err, data){
+				jobcards.find({...queryobject, jobcard_jobtype:"Callout",jobcard_maintenancedate:{$lte:dateto, $gte:datefrom}, jobcard_sitearrivaldate:{$exists:true}, $or:[{jobcard_linemanager:nome}, {jobcard_tecniconome:nome}]}, {jobcard_site:1, jobcard_sitearrivaldate:1, jobcard_ttnumber:1,jobcard_estadoactual:1, jobcard_jobinfo:1, jobcard_responsetime:1, jobcard_tecniconome:1, jobcard_linemanager:1, jobcard_loggedby:1, jobcard_regiao:1,jobcard_remedialaction:1, jobcard_arrivaldepartureduration:1}, async function(err, data){
 					if(err){
 						console.log("ocorreu um erro ao tentar aceder os dados")
 					}
@@ -16333,6 +16335,8 @@ router.post("/updatephotoinfoHvacInfo/:id",  uploadcallhvac.any(), async functio
 								  dados[i].Site=y.jobcard_site;
 								  dados[i].Maintenance_Date=y.jobcard_sitearrivaldate;
 								  dados[i].TTnumber=y.jobcard_ttnumber;
+								  dados[i].Maintenance_duration =  y.jobcard_arrivaldepartureduration;
+								  dados[i].Response_time = y.jobcard_responsetime;
 								dados[i].Reason = y.jobcard_jobinfo.join();
 								  dados[i].Status=y.ttnumber_status;
 								  dados[i].Technician=y.jobcard_tecniconome;
@@ -16363,7 +16367,7 @@ router.post("/updatephotoinfoHvacInfo/:id",  uploadcallhvac.any(), async functio
 			break;
 
 			case 3:
-				jobcards.find({...queryobject, jobcard_jobtype:"Callout",jobcard_maintenancedate:{$lte:dateto, $gte:datefrom}, jobcard_sitearrivaldate:{$exists:true}, jobcard_regiao:userData.regiao}, {jobcard_site:1, jobcard_sitearrivaldate:1, jobcard_ttnumber:1,jobcard_estadoactual:1, jobcard_jobinfo:1, jobcard_estadoactual:1, jobcard_tecniconome:1,jobcard_linemanager:1, jobcard_loggedby:1, jobcard_regiao:1,jobcard_remedialaction:1,jobcard_arrivaldepartureduration:1}, async function(err, data){
+				jobcards.find({...queryobject, jobcard_jobtype:"Callout",jobcard_maintenancedate:{$lte:dateto, $gte:datefrom}, jobcard_sitearrivaldate:{$exists:true}, jobcard_regiao:userData.regiao}, {jobcard_site:1, jobcard_sitearrivaldate:1, jobcard_ttnumber:1,jobcard_estadoactual:1, jobcard_jobinfo:1, jobcard_responsetime:1, jobcard_tecniconome:1,jobcard_linemanager:1, jobcard_loggedby:1, jobcard_regiao:1,jobcard_remedialaction:1,jobcard_arrivaldepartureduration:1}, async function(err, data){
 					if(err){
 						console.log("ocorreu um erro ao tentar aceder os dados")
 					}
